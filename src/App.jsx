@@ -316,7 +316,7 @@ const staff = [
         style={{
           backgroundImage: `url(${piscina})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'center 58%',
           backgroundAttachment: 'fixed'
         }}
       >
