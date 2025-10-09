@@ -232,7 +232,6 @@ const App = () => {
     description: t.clubDescription,
     values: t.values,
     instagram: "https://www.instagram.com/astola.it/",
-    googleDrive: "https://drive.google.com/drive/folders/1IFuR32QN30TTxHKbLkE79pRJIZMKBXcu?usp=drive_link"
   };
 
   const trainingSchedule = [
@@ -824,15 +823,6 @@ const App = () => {
               >
                 <Instagram className="w-5 h-5 mr-1" />
                 @astola.it
-              </a>
-              <a
-                href={clubInfo.googleDrive}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center text-green-400 hover:text-green-300 transition-colors"
-              >
-                <Camera className="w-5 h-5 mr-1" />
-                {language === 'es' ? 'Google Drive' : 'Google Drive'}
               </a>
             </div>
             <div className="text-gray-500 text-sm">
