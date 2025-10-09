@@ -3,6 +3,8 @@ import piscina from './assets/piscina.png';
 import mochila from './assets/mochila.png';
 import mochila2 from './assets/mochila2.jpg';
 import mochila3 from './assets/mochila3.png';
+import udalekuak from './assets/udalekuak.png';
+import master from './assets/master.png';
 import { ShoppingCart, Phone, Mail, MapPin, Star, Users, Award, Calendar, Clock, User, Instagram, Camera, Globe, ChevronDown } from 'lucide-react';
 
 const App = () => {
@@ -83,7 +85,7 @@ const App = () => {
                         'Helburua adin eta maila guztietako igerilarien prestakuntza eta garapena da. Gure konpromisoa da igeriketaren bidez ahalegina, diziplina eta talde-lana bezalako balioak sustatzea.'],
       nameMeaning: 'Gure "Astola" izena euskarazko hitzetik dator eta gure igerilariek dituzten indarra eta erabakitasuna adierazten du.',
       ourValues: 'Gure Balioak',
-      values: ['Formación integral','Respeto y deportividad','Diversión','Excelencia deportiva', 'Formación integral', 'Espíritu de equipo'],
+      values: ['Prestakuntza integrala', 'Errespetua eta kiroltasuna', 'Dibertsioa', 'Kirol bikaintasuna', 'Prestakuntza integrala', 'Talde espiritua'],
       technicalTeam: 'Gure Teknikari Taldea',
       trainingSchedule: 'Entrenamendu Ordutegiak',
       officialStore: 'Denda Ofiziala',
@@ -205,14 +207,24 @@ const App = () => {
   };
 
   const instagramCategories = [
-    { id: 'udalekuak', name: t.summerCamps, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Udalekuak', posts: 12 },
-    { id: 'masterrak', name: t.masters, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Masterrak', posts: 8 },
+    { id: 'udalekuak', name: t.summerCamps, image: udalekuak, posts: 15},
+    { id: 'masterrak', name: t.masters, image: master,posts: 15},
     { id: 'eh-txapelketa', name: t.basqueChampionship, image: 'https://placehold.co/400x400/16a34a/ffffff?text=EH+Txapelketa', posts: 15 },
     { id: 'bizkaia-txapelketa', name: t.bizkaiaChampionship, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Bizkaia', posts: 18 },
     { id: 'ezagutu-gaitzazu', name: t.meetUs, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Ezagutu+Gaitzazu', posts: 25 },
     { id: 'denborak', name: t.times, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Denborak', posts: 6 },
     { id: 'gure-igerilariak', name: t.ourSwimmers, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Gure+Igerilariak', posts: 32 }
   ];
+
+  const instagramCategoryUrls = {
+    'udalekuak': 'https://www.instagram.com/stories/highlights/18067081628120919/',
+    'masterrak': 'https://www.instagram.com/stories/highlights/18305997631168481/',
+    'eh-txapelketa': 'https://www.instagram.com/stories/highlights/18053520869135974/',
+    'bizkaia-txapelketa': 'https://www.instagram.com/stories/highlights/18043628621270354/',
+    'ezagutu-gaitzazu': 'https://www.instagram.com/stories/highlights/18061354562509664/',
+    'denborak': 'https://www.instagram.com/stories/highlights/18011278007479973/',
+    'gure-igerilariak': 'https://www.instagram.com/stories/highlights/18112680724457408/'
+  };
 
   const clubInfo = {
     name: "Astola I.K.T. Abadiño",
@@ -430,17 +442,6 @@ const App = () => {
                   <p className="text-gray-600">
                     {t.nameMeaning}
                   </p>
-                  <div className="mt-6">
-                    <a
-                      href={clubInfo.googleDrive}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-[#00A63E] hover:text-[#008a34] font-medium"
-                    >
-                      <Camera className="w-4 h-4 mr-2" />
-                      {language === 'es' ? 'Ver fotos y videos' : 'Ikusi argazkiak eta bideoak'}
-                    </a>
-                  </div>
                 </div>
                 <div className="bg-green-100 rounded-lg p-8">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">{t.ourValues}</h3>
@@ -582,7 +583,7 @@ const App = () => {
                 {instagramCategories.map((category) => (
                   <a
                     key={category.id}
-                    href={clubInfo.instagram}
+                    href={clubInfo.instagram}  // ← ¡SIEMPRE al perfil general!
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block relative group cursor-pointer"
@@ -663,17 +664,6 @@ const App = () => {
                         @astola.it
                       </a>
                     </div>
-                    <div className="flex items-center pt-2">
-                      <Camera className="w-5 h-5 text-[#00A63E] mr-3" />
-                      <a
-                        href={clubInfo.googleDrive}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#00A63E] hover:text-[#008a34] font-medium"
-                      >
-                        {language === 'es' ? 'Fotos y Videos' : 'Argazkiak eta Bideoak'}
-                      </a>
-                    </div>
                   </div>
                 </div>
                 
@@ -743,7 +733,7 @@ const App = () => {
                     {cart.map((item) => (
                       <div key={item.id} className="flex items-center space-x-4 p-4 border rounded-lg">
                         <img
-                          src={item.image}
+                          src={item.images[0]}
                           alt={item.name}
                           className="w-16 h-16 object-cover rounded"
                         />
