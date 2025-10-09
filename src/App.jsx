@@ -11,7 +11,7 @@ const App = () => {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [language, setLanguage] = useState('es');
+  const [language, setLanguage] = useState('eu');
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -669,26 +669,36 @@ const App = () => {
                 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">{t.contactForm}</h3>
-                  <form className="space-y-4">
+                  <form 
+                    action="https://formspree.io/f/movkkvvo" 
+                    method="POST"
+                    className="space-y-4"
+                  >
                     <div>
                       <input
                         type="text"
+                        name="name"
                         placeholder={t.fullName}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A63E] focus:border-transparent"
+                        required
                       />
                     </div>
                     <div>
                       <input
                         type="email"
+                        name="email"
                         placeholder={t.emailAddress}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A63E] focus:border-transparent"
+                        required
                       />
                     </div>
                     <div>
                       <textarea
+                        name="message"
                         rows="4"
                         placeholder={t.message}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A63E] focus:border-transparent"
+                        required
                       ></textarea>
                     </div>
                     <button
@@ -698,7 +708,7 @@ const App = () => {
                       {t.sendMessage}
                     </button>
                   </form>
-                </div>
+	        </div>
               </div>
             </div>
           </div>
