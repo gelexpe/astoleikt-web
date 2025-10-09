@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import piscina from './assets/piscina.png'; //
 import { ShoppingCart, Phone, Mail, MapPin, Star, Users, Award, Calendar, Clock, User, Instagram, Camera, Globe, ChevronDown } from 'lucide-react';
 
 const App = () => {
@@ -86,8 +87,8 @@ const App = () => {
       contact: 'Kontaktua',
       contactInfo: 'Kontaktu Informazioa',
       address: 'Abadiñoko Piscina Udala, Bizkaia',
-      phone: '+34 944 XXX XXX',
-      email: 'info@astoleikt.es',
+      phone: '+34 679 636 518',
+      email: 'astolait@gmail.com',
       hours: 'Astelehenetik ostiralera: 16:00 - 21:00',
       contactForm: 'Kontaktu Formularioa',
       fullName: 'Izen osoa',
@@ -219,11 +220,10 @@ const App = () => {
     { group: "Masters", age: language === 'es' ? "Adultos" : "Adin handikoa", schedule: language === 'es' ? "Martes, Jueves 20:00-21:30" : "Asteartea, Osteguna 20:00-21:30" }
   ];
 
-  const staff = [
-    { name: "Alfonso", role: language === 'es' ? "Presidente" : "Presidentea" },
-    { name: "Jokin", role: language === 'es' ? "Entrenadora Principal" : "Entrenatzaile Nagusia" },
-  ];
-
+const staff = [
+  { name: "Alfonso", role: language === 'es' ? "Presidente" : "Presidentea", experience: "" },
+  { name: "Jokin", role: language === 'es' ? "Entrenadora Principal" : "Entrenatzaile Nagusia", experience: "" },
+];
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       {/* Header */}
@@ -309,39 +309,54 @@ const App = () => {
           </div>
         </div>
       </header>
-
-      {/* Hero Section */}
-      {activeSection === 'home' && (
-        <section className="relative py-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              {t.welcome} <span className="text-green-600">Astola I.K.T.</span>
-            </h2>
-
-<p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-  {t.clubDescription}
-</p>
-
-
-            <div className="flex flex-wrap justify-center gap-4">
-              <button
-                onClick={() => setActiveSection('club')}
-                className="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
-              >
-                {t.knowClub}
-              </button>
-              <button
-                onClick={() => setActiveSection('instagram')}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center justify-center"
-              >
-                <Instagram className="w-5 h-5 mr-2" />
-                {t.followInstagram}
-              </button>
-            </div>
+    {/* Hero Section */}
+    {activeSection === 'home' && (
+      <section 
+        className="relative py-20 px-4 sm:px-6 lg:px-8 min-h-[60vh] flex items-center justify-center"
+        style={{
+          backgroundImage: `url(${piscina})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        {/* Overlay semitransparente para mejorar legibilidad */}
+        {/*<div className="absolute inset-0 bg-black bg-opacity-40"></div>*/}
+    
+    <div className="relative z-10 max-w-4xl mx-auto text-center text-white px-4">
+      <h2 className="text-3xl md:text-5xl font-bold mb-6">
+        {t.welcome}{' '}
+        <span className="text-[#00A63E]">Astola I.K.T.</span>
+      </h2>
+      
+      <div className="text-lg md:text-xl font-medium mb-8 space-y-4">
+        {Array.isArray(t.clubDescription) ? (
+          t.clubDescription.map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))
+        ) : (
+          <p>{t.clubDescription}</p>
+        )}
+      </div>
+   
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={() => setActiveSection('club')}
+              className="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
+            >
+              {t.knowClub}
+            </button>
+            <button
+              onClick={() => setActiveSection('instagram')}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center justify-center"
+            >
+              <Instagram className="w-5 h-5 mr-2" />
+              {t.followInstagram}
+            </button>
           </div>
-        </section>
-      )}
-
+        </div>
+      </section>
+    )}
       {/* El Club Section */}
       {activeSection === 'club' && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
