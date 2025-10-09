@@ -13,6 +13,7 @@ const App = () => {
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const translations = {
     es: {
@@ -250,26 +251,43 @@ const App = () => {
               </div>
             </div>
             
-            <nav className="hidden md:flex space-x-6">
-              {['home', 'club', 'horarios', 'tienda', 'instagram', 'contacto'].map((section) => (
-                <button
-                  key={section}
-                  onClick={() => setActiveSection(section)}
-                  className={`capitalize font-medium transition-colors text-sm ${
-                    activeSection === section
-                      ? 'text-[#00A63E] border-b-2 border-[#00A63E]'
-                      : 'text-gray-700 hover:text-[#00A63E]'
-                  }`}
-                >
-                  {section === 'home' ? t.home : 
-                   section === 'club' ? t.club :
-                   section === 'horarios' ? t.horarios :
-                   section === 'tienda' ? t.tienda :
-                   section === 'instagram' ? t.instagram : t.contacto}
-                </button>
-              ))}
-            </nav>
-
+	  {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-6">
+            {['home', 'club', 'horarios', 'tienda', 'instagram', 'contacto'].map((section) => (
+              <button
+                key={section}
+                onClick={() => {
+                  setActiveSection(section);
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`capitalize font-medium transition-colors text-sm ${
+                  activeSection === section
+                    ? 'text-[#00A63E] border-b-2 border-[#00A63E]'
+                    : 'text-gray-700 hover:text-[#00A63E]'
+                }`}
+              >
+                {section === 'home' ? t.home :
+                 section === 'club' ? t.club :
+                 section === 'horarios' ? t.horarios :
+                 section === 'tienda' ? t.tienda :
+                 section === 'instagram' ? t.instagram : t.contacto}
+              </button>
+            ))}
+          </nav>
+          
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-gray-700 hover:text-[#00A63E]"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <button
@@ -319,6 +337,33 @@ const App = () => {
           </div>
         </div>
       </header>
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white shadow-lg border-t">
+          <div className="px-4 pt-2 pb-3 space-y-1">
+            {['home', 'club', 'horarios', 'tienda', 'instagram', 'contacto'].map((section) => (
+              <button
+                key={section}
+                onClick={() => {
+                  setActiveSection(section);
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                  activeSection === section
+                    ? 'text-[#00A63E] bg-green-50'
+                    : 'text-gray-700 hover:text-[#00A63E] hover:bg-gray-50'
+                }`}
+              >
+                {section === 'home' ? t.home : 
+                 section === 'club' ? t.club :
+                 section === 'horarios' ? t.horarios :
+                 section === 'tienda' ? t.tienda :
+                 section === 'instagram' ? t.instagram : t.contacto}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       {activeSection === 'home' && (
