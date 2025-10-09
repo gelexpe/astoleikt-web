@@ -206,7 +206,8 @@ const App = () => {
   };
 
   const trainingSchedule = [
-    { group: "Benjamín", age: language === 'es' ? "6-8 años" : "6-8 urte", schedule: language === 'es' ? "Lunes, Miércoles, Viernes 17:00-18:00" : "Astelehena, Asteazkena, Ostirala 17:00-18:00" },
+    { group: "Benjamín", age: language === 'es' ? "2017/2016/2015" : "2017/2016/2015", schedule: language === 'es' ? ["Lunes, Miércoles 17:00-18:00", "Martes, Jueves 18:30-19:30"]
+    : ["Astelehena, Asteazkena 17:00-18:00", "Asteartea, Osteguna 18:30-19:30"] },
     { group: "Alevín", age: language === 'es' ? "9-10 años" : "9-10 urte", schedule: language === 'es' ? "Lunes a Viernes 18:00-19:30" : "Astelehena-Ostirala 18:00-19:30" },
     { group: "Infantil", age: language === 'es' ? "11-13 años" : "11-13 urte", schedule: language === 'es' ? "Lunes a Viernes 19:30-21:00" : "Astelehena-Ostirala 19:30-21:00" },
     { group: "Junior/Sénior", age: language === 'es' ? "14+ años" : "14+ urte", schedule: language === 'es' ? "Lunes a Sábado 07:00-09:00" : "Astelehena-Larunbata 07:00-09:00" },
@@ -392,32 +393,49 @@ const App = () => {
         </section>
       )}
 
-      {/* Horarios Section */}
-      {activeSection === 'horarios' && (
-        <section className="py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">{t.trainingSchedule}</h2>
-            
-            <div className="space-y-4">
-              {trainingSchedule.map((group, index) => (
-                <div key={index} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between">
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900">{group.group}</h3>
-                      <p className="text-gray-600">{group.age}</p>
-                    </div>
-                    <div className="mt-2 md:mt-0 flex items-center text-gray-700">
-                      <Clock className="w-4 h-4 mr-2" />
-                      <span>{group.schedule}</span>
-                    </div>
+{/* Horarios Section */}
+{activeSection === 'horarios' && (
+  <section className="py-16 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-4xl mx-auto">
+      <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+        {t.trainingSchedule}
+      </h2>
+      
+      <div className="space-y-4">
+        {trainingSchedule.map((group, index) => (
+          <div key={index} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+            <div className="flex flex-col md:flex-row md:items-center justify-between">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900">{group.group}</h3>
+                <p className="text-gray-600">{group.age}</p>
+              </div>
+              <div className="mt-2 md:mt-0 text-gray-700">
+                <div className="flex items-start">
+                  <Clock className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
+                  <div>
+                    {Array.isArray(group.schedule) ? (
+                      group.schedule.map((line, i) => (
+                        <span key={i} className="block">
+                          {line}
+                        </span>
+                      ))
+                    ) : (
+                      group.schedule.split('\n').map((line, i) => (
+                        <span key={i} className="block">
+                          {line.trim()}
+                        </span>
+                      ))
+                    )}
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
-        </section>
-      )}
-
+        ))}
+      </div>
+    </div>
+  </section>
+)}
       {/* Tienda Section */}
       {activeSection === 'tienda' && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
