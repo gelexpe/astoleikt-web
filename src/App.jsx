@@ -17,15 +17,19 @@ const App = () => {
       instagram: 'Instagram',
       contacto: 'Contacto',
       welcome: 'Bienvenidos a',
-      clubDescription: 'El Club de Natación Astole I.K.T. Abadiño es una institución deportiva con más de 35 años de historia, dedicada a la formación y desarrollo de nadadores de todas las edades y niveles. Nuestro compromiso es fomentar valores como el esfuerzo, la disciplina y el trabajo en equipo a través de la natación.',
+      clubDescription: '¡Bienvenidos al Club de Natación de Abadiño! Nos complace daros la bienvenida a esta nueva etapa del club. Hemos logrado resucitarlo con más fuerza y compromiso. Nuestro objetivo es formar y desarrollar nadadores de todas las edades y niveles, fomentando valores como el esfuerzo, la disciplina y el trabajo en equipo. ¡Gracias por uniros a este nuevo capítulo!',
       knowClub: 'Conoce nuestro club',
       followInstagram: 'Síguenos en Instagram',
       aboutClub: 'Sobre Nuestro Club',
       ourHistory: 'Nuestra Historia',
-      founded: 'Fundado en 1985, Astole I.K.T. Abadiño ha sido un referente en la natación vasca durante más de tres décadas. Hemos formado a cientos de nadadores que han competido a nivel regional, nacional e incluso internacional.',
-      nameMeaning: 'Nuestro nombre "Astole" proviene del euskera y representa la fuerza y determinación que caracteriza a nuestros nadadores.',
+      founded: [ '¿Cuándo nació el club?', 
+                         'El club fue una iniciativa solicitada por el pueblo en el que se fundó 2003, porque antes tenían que ir a Durango. El 20 de febrero se rompió el techo de la piscina y como hubo mucho tiempo de conmoción, se disolvió el club. Desde Mayo 2024, hemos conseguido resucitar al Club.',
+                         '¿Cuál es el objetivo del club?',
+                         'El objetivo es la formación y desarrollo de nadadores de todas las edades y niveles. Nuestro compromiso es fomentar valores como el esfuerzo, la disciplina y el trabajo en equipo a través de la natación.'
+                       ],
+      nameMeaning: 'Nuestro nombre "Astola" proviene del euskera y representa la fuerza y determinación que caracteriza a nuestros nadadores.',
       ourValues: 'Nuestros Valores',
-      values: ['Excelencia deportiva', 'Formación integral', 'Espíritu de equipo', 'Respeto y deportividad'],
+      values: ['Formación integral','Respeto y deportividad','Diversión','Excelencia deportiva', 'Formación integral', 'Espíritu de equipo'],
       technicalTeam: 'Nuestro Equipo Técnico',
       trainingSchedule: 'Horarios de Entrenamiento',
       officialStore: 'Tienda Oficial',
@@ -35,15 +39,15 @@ const App = () => {
       contact: 'Contacto',
       contactInfo: 'Información de Contacto',
       address: 'Piscina Municipal de Abadiño, Bizkaia',
-      phone: '+34 944 XXX XXX',
-      email: 'info@astoleikt.es',
+      phone: '+34 679 636 518',
+      email: 'astolait@gmail.com',
       hours: 'Lunes a Viernes: 16:00 - 21:00',
       contactForm: 'Formulario de Contacto',
       fullName: 'Nombre completo',
       emailAddress: 'Correo electrónico',
       message: 'Mensaje',
       sendMessage: 'Enviar Mensaje',
-      swimmingSince: 'Nadando hacia la excelencia desde 1985',
+      swimmingSince: 'Nadando hacia la excelencia desde 2003',
       summerCamps: 'Udalekuak',
       masters: 'Masterrak',
       basqueChampionship: 'EH Txapelketa',
@@ -61,13 +65,16 @@ const App = () => {
       instagram: 'Instagram',
       contacto: 'Kontaktua',
       welcome: 'Ongi etorri',
-      clubDescription: 'Astole I.K.T. Abadiñoko Igeriketa Kluba 35 urte baino gehiagoko historia duen erakunde kirola da, adin eta maila guztietako igerilarien formazioari eta garapenari eskainia. Gure konpromisoa ahalegina, diziplina eta talde-lana bezalako balioak sustatzea da igeriketaren bidez.',
+      clubDescription: 'Ongi etorri Abadiñoko Igeriketa Klubera! Ongi etorri klubaren etapa berri honetara. Indar eta konpromiso handiagoz berpiztea lortu dugu. Gure helburua adin eta maila guztietako igerilariak prestatzea eta garatzea da, esfortzua, diziplina eta talde-lana bezalako balioak sustatuz. Eskerrik asko kapitulu berri honetan sartzeagatik!',
       knowClub: 'Ezagutu gure kluba',
       followInstagram: 'Jarraitu gaitzazu Instagramen',
       aboutClub: 'Gure Klubari buruz',
       ourHistory: 'Gure Historia',
-      founded: '1985ean sortua, Astole I.K.T. Abadiño Euskal Herriko igeriketan erreferente izan da hiru hamarkada baino gehiagoz. Eskualdeko, nazionaleko eta baita nazioarteko mailan lehiatu diren ehunka igerilari prestatu ditugu.',
-      nameMeaning: 'Gure "Astole" izena euskarazko hitzetik dator eta gure igerilariek dituzten indarra eta erabakitasuna adierazten du.',
+      founded: ['Noiz jaio zen kluba?',
+                        'Kluba 2003 sortu zen herriak eskatutako ekimena izan zen, lehenago Durangora joan behar zutelako. Otsailaren 20an pistinaren sabaia apurtu zen eta denbora luzez konpozioa izan zenez, kluba desegin zen. Maitz 2024tik, Kluba berpiztea lortu dugu.',
+                        'Zein da klubaren helburua?',
+                        'Helburua adin eta maila guztietako igerilarien prestakuntza eta garapena da. Gure konpromisoa da igeriketaren bidez ahalegina, diziplina eta talde-lana bezalako balioak sustatzea.'],
+      nameMeaning: 'Gure "Astola" izena euskarazko hitzetik dator eta gure igerilariek dituzten indarra eta erabakitasuna adierazten du.',
       ourValues: 'Gure Balioak',
       values: ['Kirol maila bikaina', 'Formazio integrala', 'Talde espiritu', 'Errespetua eta kiroltasuna'],
       technicalTeam: 'Gure Teknikari Taldea',
@@ -87,7 +94,7 @@ const App = () => {
       emailAddress: 'Posta elektronikoa',
       message: 'Mezua',
       sendMessage: 'Bidali Mezua',
-      swimmingSince: '1985etik aurrera maila bikainera igeritzen',
+      swimmingSince: '2003tik aurrera maila bikainera igeritzen',
       summerCamps: 'Udalekuak',
       masters: 'Masterrak',
       basqueChampionship: 'EH Txapelketa',
@@ -197,7 +204,7 @@ const App = () => {
   ];
 
   const clubInfo = {
-    name: "Astole I.K.T. Abadiño",
+    name: "Astola I.K.T. Abadiño",
     slogan: t.swimmingSince,
     description: t.clubDescription,
     values: t.values,
@@ -206,19 +213,15 @@ const App = () => {
   };
 
   const trainingSchedule = [
-    { group: "Benjamín", age: language === 'es' ? "2017/2016/2015" : "2017/2016/2015", schedule: language === 'es' ? ["Lunes, Miércoles 17:00-18:00", "Martes, Jueves 18:30-19:30"]
-    : ["Astelehena, Asteazkena 17:00-18:00", "Asteartea, Osteguna 18:30-19:30"] },
-    { group: "Alevín", age: language === 'es' ? "9-10 años" : "9-10 urte", schedule: language === 'es' ? "Lunes a Viernes 18:00-19:30" : "Astelehena-Ostirala 18:00-19:30" },
-    { group: "Infantil", age: language === 'es' ? "11-13 años" : "11-13 urte", schedule: language === 'es' ? "Lunes a Viernes 19:30-21:00" : "Astelehena-Ostirala 19:30-21:00" },
-    { group: "Junior/Sénior", age: language === 'es' ? "14+ años" : "14+ urte", schedule: language === 'es' ? "Lunes a Sábado 07:00-09:00" : "Astelehena-Larunbata 07:00-09:00" },
+    { group: "Benjamín", age: language === 'es' ? "2017/2016/2015" : "2017/2016/2015", schedule: language === 'es' ? ["Lunes, Miércoles 17:00-18:00", "Martes, Jueves 18:30-19:30"] : ["Astelehena, Asteazkena 17:00-18:00", "Asteartea, Osteguna 18:30-19:30"] },
+    { group: "Alevín", age: language === 'es' ? "2014/2013" : "2014/2013", schedule: language === 'es' ? ["Lunes, Miércoles 17:00-18:00", "Martes, Jueves 18:30-19:30"]:["Astelehena, Asteazkena 17:00-18:00", "Asteartea, Osteguna 18:30-19:30"] },
+    { group: "G3", age: language === 'es' ? "2010/201172012" : "2010/2011/2012", schedule: language === 'es' ? ["Lunes, Miércoles 17:00-18:00", "Martes, Jueves 18:30-19:30"]:["Astelehena, Asteazkena 17:00-18:00", "Asteartea, Osteguna 18:30-19:30"] },
     { group: "Masters", age: language === 'es' ? "Adultos" : "Adin handikoa", schedule: language === 'es' ? "Martes, Jueves 20:00-21:30" : "Asteartea, Osteguna 20:00-21:30" }
   ];
 
   const staff = [
-    { name: "Iñaki Martínez", role: language === 'es' ? "Director Técnico" : "Zuzendari Teknikoa", experience: language === 'es' ? "25 años" : "25 urte" },
-    { name: "Amaia Gómez", role: language === 'es' ? "Entrenadora Principal" : "Entrenatzaile Nagusia", experience: language === 'es' ? "18 años" : "18 urte" },
-    { name: "Jon Etxebarria", role: language === 'es' ? "Entrenador Benjamines" : "Benjaminen Entrenatzailea", experience: language === 'es' ? "12 años" : "12 urte" },
-    { name: "Miren Aguirre", role: language === 'es' ? "Entrenadora Masters" : "Masterrak Entrenatzailea", experience: language === 'es' ? "15 años" : "15 urte" }
+    { name: "Alfonso", role: language === 'es' ? "Presidente" : "Presidentea" },
+    { name: "Jokin", role: language === 'es' ? "Entrenadora Principal" : "Entrenatzaile Nagusia" },
   ];
 
   return (
@@ -312,11 +315,14 @@ const App = () => {
         <section className="relative py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              {t.welcome} <span className="text-green-600">Astole I.K.T.</span>
+              {t.welcome} <span className="text-green-600">Astola I.K.T.</span>
             </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              {t.clubDescription}
-            </p>
+
+<p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+  {t.clubDescription}
+</p>
+
+
             <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => setActiveSection('club')}
@@ -345,9 +351,15 @@ const App = () => {
             <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
               <div>
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.ourHistory}</h3>
-                <p className="text-gray-600 mb-6">
-                  {t.founded}
-                </p>
+
+            <div className="text-gray-600 mb-6">
+              {t.founded.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+
+
+
                 <p className="text-gray-600">
                   {t.nameMeaning}
                 </p>
@@ -750,7 +762,7 @@ const App = () => {
               </a>
             </div>
             <div className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Astole I.K.T. Abadiño. {language === 'es' ? 'Todos los derechos reservados.' : 'Eskubide guztiak erreserbaturik.'}
+              © {new Date().getFullYear()} Astola I.K.T. Abadiño. {language === 'es' ? 'Todos los derechos reservados.' : 'Eskubide guztiak erreserbaturik.'}
             </div>
           </div>
         </div>
