@@ -14,6 +14,7 @@ import ekintzak from './assets/ekintzak.png';
 import camiseta1 from './assets/camiseta1.png';
 import camiseta2 from './assets/camiseta2.png';
 import camiseta3 from './assets/camiseta3.png';
+import sudadera from './assets/sudadera.jpeg';
 import { ShoppingCart, Phone, Mail, MapPin, Star, Users, Award, Calendar, Clock, User, Instagram, Camera, Globe, ChevronDown } from 'lucide-react';
 
 const App = () => {
@@ -25,6 +26,13 @@ const App = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [selectedSize, setSelectedSize] = useState('S');
+  const [currentSize, setCurrentSize] = useState('S');
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [orderName, setOrderName] = useState('');
+  const [orderLastName, setOrderLastName] = useState('');
+  const [orderEmail, setOrderEmail] = useState('');
+  const [orderPhone, setOrderPhone] = useState('');
 
   const translations = {
     es: {
@@ -134,28 +142,41 @@ const App = () => {
       name: language === 'es' ? 'Mochila' : 'Motxila',
       price: 35,
       images: [mochila,mochila2,mochila3],
-      description: language === 'es' ?  'Mochila oficial del club' : 'Klubaren motxila ofiziala'
+      description: language === 'es' ?  'Mochila oficial del club' : 'Klubaren motxila ofiziala',
+      sizes: ['Única'] // Sin tallas
     },
     {
       id: 2,
       name: language === 'es' ? 'Camiseta' : 'Kamiseta',
       price: 24.99,
       images: [camiseta1,camiseta2,camiseta3],
-      description: language === 'es' ? 'Camiseta oficial del club' : 'Klubaren kamiseta ofiziala'
+      description: language === 'es' ? 'Camiseta oficial del club' : 'Klubaren kamiseta ofiziala',
+      sizes: ['4','8','12','16','S', 'M', 'L', 'XL', '2XL'] // Solo tallas de adulto
     },
+    {
+      id: 3,
+      name: language === 'es' ? 'Sudadera' : 'Sudadera',
+      price: 24.99,
+      images: [sudadera],
+      description: language === 'es' ? 'Sudadera oficial del club' : 'Klubaren kamiseta ofiziala',
+      sizes: ['4','8','12','16','S', 'M', 'L', 'XL', '2XL'] // Solo tallas de adulto
+    },
+
     ];
 
-  const addToCart = (product) => {
+  const addToCart = (product, size = 'Única') => {
     setCart(prevCart => {
-      const existingItem = prevCart.find(item => item.id === product.id);
+      const existingItem = prevCart.find(
+        item => item.id === product.id && item.size === size
+      );
       if (existingItem) {
         return prevCart.map(item =>
-          item.id === product.id
+          item.id === product.id && item.size === size
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
-      return [...prevCart, { ...product, quantity: 1 }];
+      return [...prevCart, { ...product, size, quantity: 1 }];
     });
   };
 
@@ -183,6 +204,40 @@ const App = () => {
   };
   const getTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  const sendOrder = () => {
+    const orderDetails = cart.map(item => 
+      `${item.name} (Talla: ${item.size}) x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}`
+    ).join('\n');
+  
+    const message = `
+  Nombre: ${orderName}
+  Apellidos: ${orderLastName}
+  Email: ${orderEmail}
+  Teléfono: ${orderPhone}
+  
+  Pedido:
+  ${orderDetails}
+  
+  Total: €${getTotalPrice().toFixed(2)}
+  `;
+  
+    // Enviar por email usando Formspree
+    fetch('https://formspree.io/f/mnnggvoy', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(document.createElement('form')),
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('¡Pedido enviado! El club se pondrá en contacto contigo.');
+        setCart([]);
+        setIsOrderModalOpen(false);
+      } else {
+        alert('Error al enviar el pedido. Por favor, inténtalo de nuevo.');
+      }
+    });
   };
 
   const getCartItemCount = () => {
@@ -516,28 +571,45 @@ const App = () => {
                       alt={product.name}
                       className="w-full h-48 object-cover"
                     />
-                    <div className="p-6">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{product.description}</p>
-                      <div className="flex items-center justify-between mt-4">
-                        <span className="text-xl font-bold text-[#00A63E]">€{product.price}</span>
-                        <div className="flex space-x-2">
-                          <button
-                            onClick={() => openProductModal(product)}
-                            className="bg-gray-200 text-gray-800 px-3 py-1.5 rounded-lg hover:bg-gray-300 transition-colors text-sm font-medium"
-                          >
-                            {language === 'es' ? 'Ver' : 'Ikusi'}
-                          </button>
-                          <button
-                            onClick={() => addToCart(product)}
-                            className="bg-[#00A63E] text-white px-3 py-1.5 rounded-lg hover:bg-[#008a34] transition-colors text-sm font-medium"
-                          >
-                            {language === 'es' ? 'Comprar' : 'Erosi'}
-                          </button>
-                        </div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
+                    <p className="text-gray-600 text-sm mb-4">{product.description}</p>
+                    
+                    {/* Selector de tallas (solo si hay más de una) */}
+                    {product.sizes && product.sizes.length > 1 && (
+                      <div className="mb-3">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          {language === 'es' ? 'Talla:' : 'Neurria:'}
+                        </label>
+                        <select
+                          value={selectedSize}
+                          onChange={(e) => setSelectedSize(e.target.value)}
+                          className="w-full p-2 border border-gray-300 rounded-lg text-sm"
+                        >
+                          {product.sizes.map(size => (
+                            <option key={size} value={size}>{size}</option>
+                          ))}
+                        </select>
                       </div>
+                    )}
+                  
+                    {/* Botones */}
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => openProductModal(product)}
+                        className="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 text-sm font-medium"
+                      >
+                        {language === 'es' ? 'Ver' : 'Ikusi'}
+                      </button>
+                      <button
+                        onClick={() => addToCart(product, selectedSize)}
+                        className="flex-1 bg-[#00A63E] text-white py-2 rounded-lg hover:bg-[#008a34] text-sm font-medium"
+                      >
+                        {language === 'es' ? 'Pedir' : 'Eskatu'}
+                      </button>
                     </div>
-                  </div>
+                  </div>  
+		  </div>
                 ))}
               </div>
             </div>
@@ -741,9 +813,12 @@ const App = () => {
                         />
                         <div className="flex-1">
                           <h3 className="font-medium">{item.name}</h3>
+                          <p className="text-sm text-gray-600">
+                            {language === 'es' ? 'Talla:' : 'Neurria:'} {item.size}
+                          </p>
                           <p className="text-[#00A63E] font-semibold">€{item.price}</p>
                         </div>
-                        <div className="flex items-center space-x-2">
+			<div className="flex items-center space-x-2">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                             className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
@@ -772,9 +847,12 @@ const App = () => {
                     </span>
                     <span className="text-xl font-bold text-[#00A63E]">€{getTotalPrice().toFixed(2)}</span>
                   </div>
-                  <button className="w-full bg-[#00A63E] text-white py-3 rounded-lg font-medium hover:bg-[#008a34] transition-colors">
-                    {language === 'es' ? 'Proceder al Pago' : 'Ordainketa Egin'}
-                  </button>
+                   <button
+                   onClick={() => setIsOrderModalOpen(true)}
+                   className="w-full bg-[#00A63E] text-white py-3 rounded-lg font-medium hover:bg-[#008a34] transition-colors"
+                 >
+                   {language === 'es' ? 'Enviar Pedido' : 'Bidali Eskaera'}
+                 </button>
                 </div>
               )}
             </div>
@@ -824,80 +902,163 @@ const App = () => {
           </div>
         </div>
       </footer>
-      {/* Product Gallery Modal */}
-      {selectedProduct && (
-        <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-75 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden relative">
-            {/* Close button */}
+     {/* Product Gallery Modal */}
+     {selectedProduct && (
+       <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-75 flex items-center justify-center p-4">
+         <div className="bg-white rounded-lg max-w-4xl w-full max-h-[95vh] overflow-hidden relative">
+           {/* Close button */}
+           <button
+             onClick={() => setSelectedProduct(null)}
+             className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100"
+           >
+             ✕
+           </button>
+     
+           {/* Main image */}
+           <div className="p-6">
+             <img
+               src={selectedProduct.images[currentImageIndex]}
+               alt={selectedProduct.name}
+               className="w-full max-h-[60vh] object-contain mx-auto"
+             />
+           </div>
+     
+           {/* Thumbnails */}
+           <div className="px-6 pb-6 flex justify-center space-x-2 overflow-x-auto">
+             {selectedProduct.images.map((img, index) => (
+               <button
+                 key={index}
+                 onClick={() => setCurrentImageIndex(index)}
+                 className={`w-16 h-16 border-2 rounded-lg ${
+                   index === currentImageIndex ? 'border-[#00A63E]' : 'border-gray-300'
+                 }`}
+               >
+                 <img src={img} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover rounded" />
+               </button>
+             ))}
+           </div>
+     
+           {/* Navigation buttons */}
+           <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
+             <button
+               onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? selectedProduct.images.length - 1 : prev - 1))}
+               className="bg-white bg-opacity-80 rounded-full p-2 shadow-lg hover:bg-opacity-100"
+             >
+               ‹
+             </button>
+           </div>
+           <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
+             <button
+               onClick={() => setCurrentImageIndex((prev) => (prev === selectedProduct.images.length - 1 ? 0 : prev + 1))}
+               className="bg-white bg-opacity-80 rounded-full p-2 shadow-lg hover:bg-opacity-100"
+             >
+               ›
+             </button>
+           </div>
+     
+           {/* ✅ Product info DENTRO del contenedor principal */}
+           <div className="px-6 py-4 border-t">
+             <h3 className="text-xl font-bold text-gray-900">{selectedProduct.name}</h3>
+             <p className="text-gray-600 mt-2">{selectedProduct.description}</p>
+             
+             {/* Selector de tallas en el modal */}
+             {selectedProduct.sizes && selectedProduct.sizes.length > 1 && (
+               <div className="mt-3">
+                 <label className="block text-sm font-medium text-gray-700 mb-1">
+                   {language === 'es' ? 'Talla:' : 'Neurria:'}
+                 </label>
+                 <select
+                   value={currentSize}
+                   onChange={(e) => setCurrentSize(e.target.value)}
+                   className="w-full p-2 border border-gray-300 rounded-lg text-sm mb-3"
+                 >
+                   {selectedProduct.sizes.map(size => (
+                     <option key={size} value={size}>{size}</option>
+                   ))}
+                 </select>
+               </div>
+             )}
+     
+             <button
+               onClick={() => {
+                 const size = selectedProduct.sizes && selectedProduct.sizes.length > 1 
+                   ? currentSize 
+                   : 'Única';
+                 addToCart(selectedProduct, size);
+                 setSelectedProduct(null);
+               }}
+               className="w-full bg-[#00A63E] text-white py-2 rounded-lg hover:bg-[#008a34] transition-colors"
+             >
+               {language === 'es' ? 'Añadir al pedido' : 'Gehitu eskaerara'}
+             </button>
+           </div>
+         </div>
+       </div>
+     )} 
+    {/* Order Modal */}
+    {isOrderModalOpen && (
+      <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-75 flex items-center justify-center p-4">
+        <div className="bg-white rounded-lg max-w-md w-full p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold text-gray-900">{language === 'es' ? 'Solicitar Pedido' : 'Eskaera Eskatu'}</h2>
             <button
-              onClick={() => setSelectedProduct(null)}
-              className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100"
+              onClick={() => setIsOrderModalOpen(false)}
+              className="text-gray-500 hover:text-gray-700"
             >
               ✕
             </button>
-      
-            {/* Main image */}
-            <div className="p-6">
-              <img
-                src={selectedProduct.images[currentImageIndex]}
-                alt={selectedProduct.name}
-                className="w-full max-h-[60vh] object-contain mx-auto"
-              />
-            </div>
-      
-            {/* Thumbnails */}
-            <div className="px-6 pb-6 flex justify-center space-x-2 overflow-x-auto">
-              {selectedProduct.images.map((img, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentImageIndex(index)}
-                  className={`w-16 h-16 border-2 rounded-lg ${
-                    index === currentImageIndex ? 'border-[#00A63E]' : 'border-gray-300'
-                  }`}
-                >
-                  <img src={img} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover rounded" />
-                </button>
-              ))}
-            </div>
-      
-            {/* Navigation buttons */}
-            <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
-              <button
-                onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? selectedProduct.images.length - 1 : prev - 1))}
-                className="bg-white bg-opacity-80 rounded-full p-2 shadow-lg hover:bg-opacity-100"
-              >
-                ‹
-              </button>
-            </div>
-            <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
-              <button
-                onClick={() => setCurrentImageIndex((prev) => (prev === selectedProduct.images.length - 1 ? 0 : prev + 1))}
-                className="bg-white bg-opacity-80 rounded-full p-2 shadow-lg hover:bg-opacity-100"
-              >
-                ›
-              </button>
-            </div>
-      
-            {/* Product info */}
-            <div className="px-6 py-4 border-t">
-              <h3 className="text-xl font-bold text-gray-900">{selectedProduct.name}</h3>
-              <p className="text-gray-600 mt-2">{selectedProduct.description}</p>
-              <div className="mt-4 flex justify-between items-center">
-                <span className="text-2xl font-bold text-[#00A63E]">€{selectedProduct.price}</span>
-                <button
-                  onClick={() => {
-                    addToCart(selectedProduct);
-                    setSelectedProduct(null);
-                  }}
-                  className="bg-[#00A63E] text-white px-6 py-2 rounded-lg hover:bg-[#008a34] transition-colors"
-                >
-                  {language === 'es' ? 'Añadir al carrito' : 'Gehitu saskira'}
-                </button>
-              </div>
-            </div>
+          </div>
+          <div className="space-y-4">
+            <input
+              type="text"
+              placeholder={language === 'es' ? 'Nombre' : 'Izena'}
+              value={orderName}
+              onChange={(e) => setOrderName(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A63E] focus:border-transparent"
+              required
+            />
+            <input
+              type="text"
+              placeholder={language === 'es' ? 'Apellidos' : 'Abizena'}
+              value={orderLastName}
+              onChange={(e) => setOrderLastName(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A63E] focus:border-transparent"
+              required
+            />
+            <input
+              type="email"
+              placeholder={language === 'es' ? 'Correo electrónico' : 'Posta elektronikoa'}
+              value={orderEmail}
+              onChange={(e) => setOrderEmail(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A63E] focus:border-transparent"
+              required
+            />
+            <input
+              type="tel"
+              placeholder={language === 'es' ? 'Teléfono' : 'Telefonoa'}
+              value={orderPhone}
+              onChange={(e) => setOrderPhone(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A63E] focus:border-transparent"
+              required
+            />
+          </div>
+          <div className="mt-6 flex justify-between">
+            <button
+              onClick={() => setIsOrderModalOpen(false)}
+              className="px-4 py-2 text-gray-700 hover:text-gray-900"
+            >
+              {language === 'es' ? 'Cancelar' : 'Utzi'}
+            </button>
+            <button
+              onClick={sendOrder}
+              className="bg-[#00A63E] text-white px-6 py-2 rounded-lg hover:bg-[#008a34] transition-colors"
+            >
+              {language === 'es' ? 'Enviar Pedido' : 'Bidali Eskaera'}
+            </button>
           </div>
         </div>
-      )}
+      </div>
+    )}
     </div>
   );
 };
