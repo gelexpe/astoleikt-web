@@ -11,6 +11,9 @@ import bizkaia from './assets/bizkaia.png';
 import igerilariak from './assets/igerilariak.png';
 import denborak from './assets/denborak.png';
 import ekintzak from './assets/ekintzak.png';
+import camiseta1 from './assets/camiseta1.png';
+import camiseta2 from './assets/camiseta2.png';
+import camiseta3 from './assets/camiseta3.png';
 import { ShoppingCart, Phone, Mail, MapPin, Star, Users, Award, Calendar, Clock, User, Instagram, Camera, Globe, ChevronDown } from 'lucide-react';
 
 const App = () => {
@@ -131,14 +134,14 @@ const App = () => {
       name: language === 'es' ? 'Mochila' : 'Motxila',
       price: 35,
       images: [mochila,mochila2,mochila3],
-      description: language === 'es' ? 'Gorros de silicona de alta calidad' : 'Silikonazko kapel kalitate handia'
+      description: language === 'es' ?  'Mochila oficial del club' : 'Klubaren motxila ofiziala'
     },
     {
       id: 2,
-      name: language === 'es' ? 'Gafas de Natación' : 'Igeriketa Betaurrekoak',
+      name: language === 'es' ? 'Camiseta' : 'Kamiseta',
       price: 24.99,
-      images: ['https://placehold.co/300x200/16a34a/ffffff?text=Gafas+Verdes'],
-      description: language === 'es' ? 'Gafas antivaho con protección UV' : 'Izotz gabeko betaurrekoak UV babesa dutenak'
+      images: [camiseta1,camiseta2,camiseta3],
+      description: language === 'es' ? 'Camiseta oficial del club' : 'Klubaren kamiseta ofiziala'
     },
     ];
 
@@ -516,14 +519,22 @@ const App = () => {
                     <div className="p-6">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
                       <p className="text-gray-600 text-sm mb-4">{product.description}</p>
-                      <div className="flex justify-between items-center">
+                      <div className="flex items-center justify-between mt-4">
                         <span className="text-xl font-bold text-[#00A63E]">€{product.price}</span>
-                      	<button
-                          onClick={() => openProductModal(product)}
-                          className="bg-[#00A63E] text-white px-4 py-2 rounded-lg hover:bg-[#008a34] transition-colors"
-                        >
-                          {language === 'es' ? 'Ver' : 'Ikusi'}
-                        </button>
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => openProductModal(product)}
+                            className="bg-gray-200 text-gray-800 px-3 py-1.5 rounded-lg hover:bg-gray-300 transition-colors text-sm font-medium"
+                          >
+                            {language === 'es' ? 'Ver' : 'Ikusi'}
+                          </button>
+                          <button
+                            onClick={() => addToCart(product)}
+                            className="bg-[#00A63E] text-white px-3 py-1.5 rounded-lg hover:bg-[#008a34] transition-colors text-sm font-medium"
+                          >
+                            {language === 'es' ? 'Comprar' : 'Erosi'}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
