@@ -662,7 +662,7 @@ const App = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">{t.contactForm}</h3>
                   <form 
-                    action="https://formspree.io/f/movkkvvo" 
+                    action="https://formspree.io/f/mnnggdeq" 
                     method="POST"
                     className="space-y-4"
                   >
