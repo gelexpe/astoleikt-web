@@ -4,7 +4,13 @@ import mochila from './assets/mochila.png';
 import mochila2 from './assets/mochila2.jpg';
 import mochila3 from './assets/mochila3.png';
 import udalekuak from './assets/udalekuak.png';
+import jardunaldiak from './assets/jardunaldiak.png';
+import eh_txapelketa from './assets/eh_txapelketa.png';
 import master from './assets/master.png';
+import bizkaia from './assets/bizkaia.png';
+import igerilariak from './assets/igerilariak.png';
+import denborak from './assets/denborak.png';
+import ekintzak from './assets/ekintzak.png';
 import { ShoppingCart, Phone, Mail, MapPin, Star, Users, Award, Calendar, Clock, User, Instagram, Camera, Globe, ChevronDown } from 'lucide-react';
 
 const App = () => {
@@ -61,8 +67,9 @@ const App = () => {
       masters: 'Masterrak',
       basqueChampionship: 'EH Txapelketa',
       bizkaiaChampionship: 'Bizkaiko Txapelketa',
-      meetUs: 'Ezagutu Gaitzazu',
+      competition: 'Jardunaldiak',
       times: 'Denborak',
+      actions: 'Ekintza bereziak',
       ourSwimmers: 'Gure Igerilariak',
       categories: 'Categorías'
     },
@@ -108,8 +115,9 @@ const App = () => {
       masters: 'Masterrak',
       basqueChampionship: 'EH Txapelketa',
       bizkaiaChampionship: 'Bizkaiko Txapelketa',
-      meetUs: 'Ezagutu Gaitzazu',
+      competition: 'Competiciones',
       times: 'Denborak',
+      actions: 'Acitvidades especiales',
       ourSwimmers: 'Gure Igerilariak',
       categories: 'Kategoriak'
     }
@@ -132,35 +140,7 @@ const App = () => {
       images: ['https://placehold.co/300x200/16a34a/ffffff?text=Gafas+Verdes'],
       description: language === 'es' ? 'Gafas antivaho con protección UV' : 'Izotz gabeko betaurrekoak UV babesa dutenak'
     },
-    {
-      id: 3,
-      name: language === 'es' ? 'Bañador Competición' : 'Lehiaketarako Bainu-trajea',
-      price: 45.99,
-      images: ['https://placehold.co/300x200/16a34a/ffffff?text=Bañador+Verde'],
-      description: language === 'es' ? 'Bañador técnico para competición' : 'Lehiaketarako traje teknikoa'
-    },
-    {
-      id: 4,
-      name: language === 'es' ? 'Chándal Club' : 'Klubeko Txandal',
-      price: 65.99,
-      images: ['https://placehold.co/300x200/16a34a/ffffff?text=Chándal+Verde'],
-      description: language === 'es' ? 'Chándal oficial del club' : 'Klubaren txandal ofiziala'
-    },
-    {
-      id: 5,
-      name: language === 'es' ? 'Toalla Técnica' : 'Toalla Teknikoa',
-      price: 18.99,
-      images: ['https://placehold.co/300x200/16a34a/ffffff?text=Toalla+Verde'],
-      description: language === 'es' ? 'Toalla de microfibra rápida secado' : 'Azkar lehortzen den mikrofibra toalla'
-    },
-    {
-      id: 6,
-      name: language === 'es' ? 'Bolsa Deportiva' : 'Zorro Kirola',
-      price: 29.99,
-      images: ['https://placehold.co/300x200/16a34a/ffffff?text=Bolsa+Verde'],
-      description: language === 'es' ? 'Bolsa impermeable para material' : 'Materialarentzako zorro ur-iragazkorra'
-    }
-  ];
+    ];
 
   const addToCart = (product) => {
     setCart(prevCart => {
@@ -207,13 +187,14 @@ const App = () => {
   };
 
   const instagramCategories = [
-    { id: 'udalekuak', name: t.summerCamps, image: udalekuak, posts: 15},
-    { id: 'masterrak', name: t.masters, image: master,posts: 15},
-    { id: 'eh-txapelketa', name: t.basqueChampionship, image: 'https://placehold.co/400x400/16a34a/ffffff?text=EH+Txapelketa', posts: 15 },
-    { id: 'bizkaia-txapelketa', name: t.bizkaiaChampionship, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Bizkaia', posts: 18 },
-    { id: 'ezagutu-gaitzazu', name: t.meetUs, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Ezagutu+Gaitzazu', posts: 25 },
-    { id: 'denborak', name: t.times, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Denborak', posts: 6 },
-    { id: 'gure-igerilariak', name: t.ourSwimmers, image: 'https://placehold.co/400x400/16a34a/ffffff?text=Gure+Igerilariak', posts: 32 }
+    { id: 'udalekuak', name: t.summerCamps, image: udalekuak,},
+    { id: 'masterrak', name: t.masters, image: master,},
+    { id: 'eh-txapelketa', name: t.basqueChampionship, image: eh_txapelketa, },
+    { id: 'bizkaia-txapelketa', name: t.bizkaiaChampionship, image: bizkaia,  },
+    { id: 'jardunaldiak', name: t.competition, image: jardunaldiak,  },
+    { id: 'denborak', name: t.times, image: denborak,  },
+    { id: 'gure-igerilariak', name: t.ourSwimmers, image: igerilariak,  },
+    { id: 'ekintzak', name: t.actions, image: ekintzak,  }
   ];
 
   const instagramCategoryUrls = {
@@ -221,9 +202,10 @@ const App = () => {
     'masterrak': 'https://www.instagram.com/stories/highlights/18305997631168481/',
     'eh-txapelketa': 'https://www.instagram.com/stories/highlights/18053520869135974/',
     'bizkaia-txapelketa': 'https://www.instagram.com/stories/highlights/18043628621270354/',
-    'ezagutu-gaitzazu': 'https://www.instagram.com/stories/highlights/18061354562509664/',
+    'jardunaldiak': 'https://www.instagram.com/stories/highlights/17853377253323369/',
     'denborak': 'https://www.instagram.com/stories/highlights/18011278007479973/',
-    'gure-igerilariak': 'https://www.instagram.com/stories/highlights/18112680724457408/'
+    'gure-igerilariak': 'https://www.instagram.com/stories/highlights/18112680724457408/',
+    'ekintzak': 'https://www.instagram.com/stories/highlights/18112680724457408/'
   };
 
   const clubInfo = {
@@ -582,7 +564,7 @@ const App = () => {
                 {instagramCategories.map((category) => (
                   <a
                     key={category.id}
-                    href={clubInfo.instagram}  // ← ¡SIEMPRE al perfil general!
+                    href={instagramCategoryUrls[category.id] || clubInfo.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block relative group cursor-pointer"
@@ -596,13 +578,13 @@ const App = () => {
                       <div className="text-white text-center">
                         <Camera className="w-8 h-8 mx-auto mb-2" />
                         <h4 className="text-lg font-bold mb-1">{category.name}</h4>
-                        <p className="text-sm">{category.posts} {language === 'es' ? 'publicaciones' : 'argitalpen'}</p>
+                        <p className="text-sm">{category.posts} {language === 'es' ? 'publicaciones' : 'argitalpenak'}</p>
                       </div>
                     </div>
                     <div className="absolute bottom-4 left-4 right-4">
                       <div className="bg-white bg-opacity-90 rounded-lg p-3">
                         <h4 className="font-semibold text-gray-900">{category.name}</h4>
-                        <p className="text-sm text-gray-600">{category.posts} {language === 'es' ? 'publicaciones' : 'argitalpen'}</p>
+                        <p className="text-sm text-gray-600">{category.posts} {language === 'es' ? 'publicaciones' : 'argitalpenak'}</p>
                       </div>
                     </div>
                   </a>
