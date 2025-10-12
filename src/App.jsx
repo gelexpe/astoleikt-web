@@ -207,27 +207,23 @@ const App = () => {
   };
 
   const sendOrder = () => {
-    const orderDetails = cart.map(item => 
+    const orderDetails = cart.map(item =>
       `${item.name} (Talla: ${item.size}) x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}`
     ).join('\n');
   
-    const message = `
-  Nombre: ${orderName}
-  Apellidos: ${orderLastName}
-  Email: ${orderEmail}
-  Teléfono: ${orderPhone}
+    // Crear un formulario dinámico con los campos necesarios
+    const formData = new FormData();
+    formData.append('Nombre', orderName);
+    formData.append('Apellidos', orderLastName);
+    formData.append('Email', orderEmail);
+    formData.append('Teléfono', orderPhone);
+    formData.append('Pedido', orderDetails);
+    formData.append('Total', getTotalPrice().toFixed(2));
   
-  Pedido:
-  ${orderDetails}
-  
-  Total: €${getTotalPrice().toFixed(2)}
-  `;
-  
-    // Enviar por email usando Formspree
     fetch('https://formspree.io/f/mnnggvoy', {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
-      body: new FormData(document.createElement('form')),
+      body: formData,
     })
     .then(response => {
       if (response.ok) {
@@ -237,10 +233,13 @@ const App = () => {
       } else {
         alert('Error al enviar el pedido. Por favor, inténtalo de nuevo.');
       }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error al enviar el pedido. Por favor, inténtalo de nuevo.');
     });
   };
-
-  const getCartItemCount = () => {
+    const getCartItemCount = () => {
     return cart.reduce((count, item) => count + item.quantity, 0);
   };
 
@@ -278,7 +277,7 @@ const App = () => {
     { group: "Benjamín", age: language === 'es' ? "2017/2016/2015" : "2017/2016/2015", schedule: language === 'es' ? ["Lunes, Miércoles 17:00-18:00", "Martes, Jueves 18:30-19:30"] : ["Astelehena, Asteazkena 17:00-18:00", "Asteartea, Osteguna 18:30-19:30"] },
     { group: "Alevín", age: language === 'es' ? "2014/2013" : "2014/2013", schedule: language === 'es' ? ["Lunes, Miércoles 17:00-18:00", "Martes, Jueves 18:30-19:30"]:["Astelehena, Asteazkena 17:00-18:00", "Asteartea, Osteguna 18:30-19:30"] },
     { group: "G3", age: language === 'es' ? "2010/2011/2012" : "2010/2011/2012", schedule: language === 'es' ? ["Lunes, Miércoles 17:00-18:00", "Martes, Jueves 18:30-19:30"]:["Astelehena, Asteazkena 17:00-18:00", "Asteartea, Osteguna 18:30-19:30"] },
-    { group: "Masters", age: language === 'es' ? "Adultos" : "Adin handikoa", schedule: language === 'es' ? "Martes, Jueves 20:00-21:30" : "Asteartea, Osteguna 20:00-21:30" }
+    { group: "Masters", age: language === 'es' ? "Adultos" : "Adin handikoa", schedule: language === 'es' ? "Martes, Jueves 19:30-20:30" : "Asteartea, Osteguna 19:30-20:30" }
   ];
 
   const staff = [
