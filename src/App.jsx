@@ -36,6 +36,8 @@ const App = () => {
   const [orderLastName, setOrderLastName] = useState('');
   const [orderEmail, setOrderEmail] = useState('');
   const [orderPhone, setOrderPhone] = useState('');
+  const [events, setEvents] = useState([]);
+  const [loadingEvents, setLoadingEvents] = useState(true);
 
   const translations = {
     es: {
@@ -85,7 +87,9 @@ const App = () => {
       times: 'Denborak',
       actions: 'Ekintza bereziak',
       ourSwimmers: 'Gure Igerilariak',
-      categories: 'Categorías'
+      categories: 'Categorías',
+      calendario: 'Calendario'
+
     },
     eu: {
       home: 'Hasiera',
@@ -133,11 +137,13 @@ const App = () => {
       times: 'Denborak',
       actions: 'Acitvidades especiales',
       ourSwimmers: 'Gure Igerilariak',
-      categories: 'Kategoriak'
+      categories: 'Kategoriak',
+      calendario: 'Egutegia'
     }
   };
 
   const t = translations[language];
+  
 
   const products = [
     {
@@ -165,7 +171,7 @@ const App = () => {
       sizes: ['4','8','12','16','S', 'M', 'L', 'XL', '2XL'] // Solo tallas de adulto
     },
     {
-      id: 3,
+      id: 4,
       name: language === 'es' ? 'Pantalon' : 'Prakak',
       price: 10,
       images: [pantalon3,pantalon1,pantalon2],
@@ -315,7 +321,7 @@ const App = () => {
             
 	  {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6">
-            {['home', 'club', 'horarios', 'tienda', 'instagram', 'contacto'].map((section) => (
+            {['home', 'club', 'horarios', 'tienda', 'instagram', 'calendario', 'contacto'].map((section) => (
               <button
                 key={section}
                 onClick={() => {
@@ -332,6 +338,7 @@ const App = () => {
                  section === 'club' ? t.club :
                  section === 'horarios' ? t.horarios :
                  section === 'tienda' ? t.tienda :
+                 section === 'calendario' ? t.calendario :
                  section === 'instagram' ? t.instagram : t.contacto}
               </button>
             ))}
@@ -420,6 +427,7 @@ const App = () => {
                  section === 'club' ? t.club :
                  section === 'horarios' ? t.horarios :
                  section === 'tienda' ? t.tienda :
+                 section === 'calendario' ? t.calendario :
                  section === 'instagram' ? t.instagram : t.contacto}
               </button>
             ))}
@@ -792,7 +800,30 @@ const App = () => {
         </section>
       )}
 
-      {/* Cart Sidebar */}
+	  {/* Calendario Section */}
+	  
+	  {/* Calendario Section */}
+	  {activeSection === 'calendario' && (
+  <section className="py-16 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-4xl mx-auto">
+      <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+        {language === 'es' ? 'Calendario de Eventos' : 'Ekitaldien Egutegia'}
+      </h2>
+      <div className="flex justify-center">
+        <iframe
+          src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FMadrid&showPrint=0&showCalendars=0&title=astolaikt&src=aWt0YXN0b2xAZ21haWwuY29t&color=%23039be5" 
+          style={{ border: 0 }}
+          width="100%"
+          height="600"
+          frameBorder="0"
+          scrolling="no"
+          title="Calendario Astole IKT"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+)}
+	  {/* Cart Sidebar */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-50" onClick={() => setIsCartOpen(false)}></div>
