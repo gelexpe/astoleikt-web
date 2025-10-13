@@ -918,7 +918,7 @@ const App = () => {
      {/* Product Gallery Modal */}
      {selectedProduct && (
        <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-75 flex items-center justify-center p-4">
-         <div className="bg-white rounded-lg max-w-4xl w-full max-h-[95vh] overflow-hidden relative">
+         <div className="bg-white rounded-lg w-full max-w-4xl max-h-[95vh] h-[90vh] sm:h-auto overflow-y-auto relative">
            {/* Close button */}
            <button
              onClick={() => setSelectedProduct(null)}
@@ -973,8 +973,8 @@ const App = () => {
 {/* Product info - 2 columnas */}
 <div className="px-6 py-4 border-t flex flex-col md:flex-row gap-6">
   {/* Columna izquierda: Nombre, descripción, talla */}
-  <div className="md:w-1/2">
-    <h3 className="text-xl font-bold text-gray-900">{selectedProduct.name}</h3>
+  <div className="md:w-1/2 min-w-0">
+    <h3 className="text-xl font-bold text-gray-900 truncate">{selectedProduct.name}</h3>
     <p className="text-gray-600 mt-2">{selectedProduct.description}</p>
     {/* Selector de tallas */}
     {selectedProduct.sizes && selectedProduct.sizes.length > 1 && (
@@ -996,7 +996,7 @@ const App = () => {
   </div>
 
   {/* Columna derecha: Precio y botón */}
-  <div className="md:w-1/2 flex flex-col justify-between">
+  <div className="md:w-1/2 flex flex-col justify-between min-w-0">
     <div>
       <span className="text-2xl font-bold text-[#00A63E]">€{selectedProduct.price}</span>
     </div>
