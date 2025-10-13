@@ -15,6 +15,9 @@ import camiseta1 from './assets/camiseta1.png';
 import camiseta2 from './assets/camiseta2.png';
 import camiseta3 from './assets/camiseta3.png';
 import sudadera from './assets/sudadera.jpeg';
+import pantalon1 from './assets/pantalon1.jpg';
+import pantalon2 from './assets/pantalon2.png';
+import pantalon3 from './assets/pantalon3.png';
 import { ShoppingCart, Phone, Mail, MapPin, Star, Users, Award, Calendar, Clock, User, Instagram, Camera, Globe, ChevronDown } from 'lucide-react';
 
 const App = () => {
@@ -158,9 +161,18 @@ const App = () => {
       name: language === 'es' ? 'Sudadera' : 'Sudadera',
       price: 24.99,
       images: [sudadera],
-      description: language === 'es' ? 'Sudadera oficial del club' : 'Klubaren kamiseta ofiziala',
+      description: language === 'es' ? 'Sudadera oficial del club' : 'Klubaren sudadera ofiziala',
       sizes: ['4','8','12','16','S', 'M', 'L', 'XL', '2XL'] // Solo tallas de adulto
     },
+    {
+      id: 3,
+      name: language === 'es' ? 'Pantalon' : 'Prakak',
+      price: 10,
+      images: [pantalon3,pantalon1,pantalon2],
+      description: language === 'es' ? 'Pantalon oficial del club' : 'Klubaren praka ofiziala',
+      sizes: ['4','8','12','16','S', 'M', 'L', 'XL', '2XL'] // Solo tallas de adulto
+    },
+
 
     ];
 
@@ -573,7 +585,9 @@ const App = () => {
                   <div className="p-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
                     <p className="text-gray-600 text-sm mb-4">{product.description}</p>
-                    
+                   {/* ✅ Precio visible en la tienda */}
+                    <p className="text-xl font-bold text-[#00A63E] mb-3">€{product.price}</p>
+   
                     {/* Selector de tallas (solo si hay más de una) */}
                     {product.sizes && product.sizes.length > 1 && (
                       <div className="mb-3">
@@ -956,41 +970,50 @@ const App = () => {
            </div>
      
            {/* ✅ Product info DENTRO del contenedor principal */}
-           <div className="px-6 py-4 border-t">
-             <h3 className="text-xl font-bold text-gray-900">{selectedProduct.name}</h3>
-             <p className="text-gray-600 mt-2">{selectedProduct.description}</p>
-             
-             {/* Selector de tallas en el modal */}
-             {selectedProduct.sizes && selectedProduct.sizes.length > 1 && (
-               <div className="mt-3">
-                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                   {language === 'es' ? 'Talla:' : 'Neurria:'}
-                 </label>
-                 <select
-                   value={currentSize}
-                   onChange={(e) => setCurrentSize(e.target.value)}
-                   className="w-full p-2 border border-gray-300 rounded-lg text-sm mb-3"
-                 >
-                   {selectedProduct.sizes.map(size => (
-                     <option key={size} value={size}>{size}</option>
-                   ))}
-                 </select>
-               </div>
-             )}
-     
-             <button
-               onClick={() => {
-                 const size = selectedProduct.sizes && selectedProduct.sizes.length > 1 
-                   ? currentSize 
-                   : 'Única';
-                 addToCart(selectedProduct, size);
-                 setSelectedProduct(null);
-               }}
-               className="w-full bg-[#00A63E] text-white py-2 rounded-lg hover:bg-[#008a34] transition-colors"
-             >
-               {language === 'es' ? 'Añadir al pedido' : 'Gehitu eskaerara'}
-             </button>
-           </div>
+{/* Product info - 2 columnas */}
+<div className="px-6 py-4 border-t flex flex-col md:flex-row gap-6">
+  {/* Columna izquierda: Nombre, descripción, talla */}
+  <div className="md:w-1/2">
+    <h3 className="text-xl font-bold text-gray-900">{selectedProduct.name}</h3>
+    <p className="text-gray-600 mt-2">{selectedProduct.description}</p>
+    {/* Selector de tallas */}
+    {selectedProduct.sizes && selectedProduct.sizes.length > 1 && (
+      <div className="mt-3">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {language === 'es' ? 'Talla:' : 'Neurria:'}
+        </label>
+        <select
+          value={currentSize}
+          onChange={(e) => setCurrentSize(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-lg text-sm"
+        >
+          {selectedProduct.sizes.map(size => (
+            <option key={size} value={size}>{size}</option>
+          ))}
+        </select>
+      </div>
+    )}
+  </div>
+
+  {/* Columna derecha: Precio y botón */}
+  <div className="md:w-1/2 flex flex-col justify-between">
+    <div>
+      <span className="text-2xl font-bold text-[#00A63E]">€{selectedProduct.price}</span>
+    </div>
+    <button
+      onClick={() => {
+        const size = selectedProduct.sizes && selectedProduct.sizes.length > 1 
+          ? currentSize 
+          : 'Única';
+        addToCart(selectedProduct, size);
+        setSelectedProduct(null);
+      }}
+      className="w-full bg-[#00A63E] text-white py-2 rounded-lg hover:bg-[#008a34] transition-colors mt-4"
+    >
+      {language === 'es' ? 'Añadir al pedido' : 'Gehitu eskaerara'}
+    </button>
+  </div>
+</div>
          </div>
        </div>
      )} 
