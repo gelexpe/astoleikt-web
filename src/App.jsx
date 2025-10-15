@@ -39,11 +39,33 @@ import {
   Music,
 } from "lucide-react";
 
+// Funciones auxiliares para localStorage
+const getStoredValue = (key, defaultValue) => {
+  if (typeof window === "undefined") return defaultValue;
+  try {
+    const item = window.localStorage.getItem(key);
+    return item ? JSON.parse(item) : defaultValue;
+  } catch (e) {
+    console.warn(`Error reading localStorage key “${key}”:`, e);
+    return defaultValue;
+  }
+};
+
+const setStoredValue = (key, value) => {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    console.warn(`Error setting localStorage key “${key}”:`, e);
+  }
+};
+
 const App = () => {
-  const [cart, setCart] = useState([]);
+  // Estados con persistencia en localStorage
+  const [cart, setCart] = useState(() => getStoredValue("astola_cart", []));
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
-  const [language, setLanguage] = useState("eu");
+  const [activeSection, setActiveSection] = useState(() => getStoredValue("astola_activeSection", "home"));
+  const [language, setLanguage] = useState(() => getStoredValue("astola_language", "eu"));
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -57,7 +79,24 @@ const App = () => {
   const [orderPhone, setOrderPhone] = useState("");
   const [events, setEvents] = useState([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
-  const [socialMediaTab, setSocialMediaTab] = useState("instagram"); // 'instagram', 'facebook', or 'tiktok'
+  const [socialMediaTab, setSocialMediaTab] = useState(() => getStoredValue("astola_socialMediaTab", "instagram")); // 'instagram', 'facebook', or 'tiktok'
+
+  // Guardar estados en localStorage cuando cambien
+  useEffect(() => {
+    setStoredValue("astola_cart", cart);
+  }, [cart]);
+
+  useEffect(() => {
+    setStoredValue("astola_activeSection", activeSection);
+  }, [activeSection]);
+
+  useEffect(() => {
+    setStoredValue("astola_language", language);
+  }, [language]);
+
+  useEffect(() => {
+    setStoredValue("astola_socialMediaTab", socialMediaTab);
+  }, [socialMediaTab]);
 
   const translations = {
     es: {
