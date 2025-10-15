@@ -35,6 +35,8 @@ import {
   Camera,
   Globe,
   ChevronDown,
+  Facebook,
+  Music,
 } from "lucide-react";
 
 const App = () => {
@@ -55,6 +57,7 @@ const App = () => {
   const [orderPhone, setOrderPhone] = useState("");
   const [events, setEvents] = useState([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
+  const [socialMediaTab, setSocialMediaTab] = useState("instagram"); // 'instagram', 'facebook', or 'tiktok'
 
   const translations = {
     es: {
@@ -62,7 +65,7 @@ const App = () => {
       club: "El Club",
       horarios: "Horarios",
       tienda: "Tienda",
-      instagram: "Instagram",
+      redes: "Redes",
       contacto: "Contacto",
       welcome: "Bienvenidos a",
       clubDescription:
@@ -92,6 +95,8 @@ const App = () => {
       trainingSchedule: "Horarios de Entrenamiento",
       officialStore: "Tienda Oficial",
       followUsInstagram: "Síguenos en Instagram",
+      followUsFacebook: "Síguenos en Facebook",
+      followUsTikTok: "Síguenos en TikTok",
       stayUpdated:
         "Mantente al día con nuestras últimas actividades, competiciones y logros",
       viewAllPosts: "Ver todas las publicaciones",
@@ -123,7 +128,7 @@ const App = () => {
       club: "Kluba",
       horarios: "Ordutegiak",
       tienda: "Denda",
-      instagram: "Instagram",
+      redes: "Sare sozialak",
       contacto: "Kontaktua",
       welcome: "Ongi etorri",
       clubDescription:
@@ -153,6 +158,8 @@ const App = () => {
       trainingSchedule: "Entrenamendu Ordutegiak",
       officialStore: "Denda Ofiziala",
       followUsInstagram: "Jarraitu gaitzazu Instagramen",
+      followUsFacebook: "Jarraitu gaitzazu Facebooken",
+      followUsTikTok: "Jarraitu gaitzazu TikTokean",
       stayUpdated: "Eguneratu gure azken jarduerak, lehiaketak eta lorpenak",
       viewAllPosts: "Ikusi argitalpen guztiak",
       contact: "Kontaktua",
@@ -192,7 +199,7 @@ const App = () => {
         language === "es"
           ? "Mochila oficial del club"
           : "Klubaren motxila ofiziala",
-      sizes: ["Única"], // Sin tallas
+      sizes: ["Única"],
     },
     {
       id: 2,
@@ -203,7 +210,7 @@ const App = () => {
         language === "es"
           ? "Camiseta oficial del club"
           : "Klubaren kamiseta ofiziala",
-      sizes: ["4", "8", "12", "16", "S", "M", "L", "XL", "2XL"], // Solo tallas de adulto
+      sizes: ["4", "8", "12", "16", "S", "M", "L", "XL", "2XL"],
     },
     {
       id: 3,
@@ -214,7 +221,7 @@ const App = () => {
         language === "es"
           ? "Sudadera oficial del club"
           : "Klubaren sudadera ofiziala",
-      sizes: ["4", "8", "12", "16", "S", "M", "L", "XL", "2XL"], // Solo tallas de adulto
+      sizes: ["4", "8", "12", "16", "S", "M", "L", "XL", "2XL"],
     },
     {
       id: 4,
@@ -225,7 +232,7 @@ const App = () => {
         language === "es"
           ? "Pantalon oficial del club"
           : "Klubaren praka ofiziala",
-      sizes: ["4", "8", "12", "16", "S", "M", "L", "XL", "2XL"], // Solo tallas de adulto
+      sizes: ["4", "8", "12", "16", "S", "M", "L", "XL", "2XL"],
     },
   ];
 
@@ -265,6 +272,7 @@ const App = () => {
     setSelectedProduct(product);
     setCurrentImageIndex(0);
   };
+
   const getTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
@@ -276,8 +284,6 @@ const App = () => {
           `${item.name} (Talla: ${item.size}) x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}`,
       )
       .join("\n");
-
-    // Crear un formulario dinámico con los campos necesarios
     const formData = new FormData();
     formData.append("Nombre", orderName);
     formData.append("Apellidos", orderLastName);
@@ -285,7 +291,6 @@ const App = () => {
     formData.append("Teléfono", orderPhone);
     formData.append("Pedido", orderDetails);
     formData.append("Total", getTotalPrice().toFixed(2));
-
     fetch("https://formspree.io/f/mnnggvoy", {
       method: "POST",
       headers: { Accept: "application/json" },
@@ -305,6 +310,7 @@ const App = () => {
         alert("Error al enviar el pedido. Por favor, inténtalo de nuevo.");
       });
   };
+
   const getCartItemCount = () => {
     return cart.reduce((count, item) => count + item.quantity, 0);
   };
@@ -343,6 +349,8 @@ const App = () => {
     description: t.clubDescription,
     values: t.values,
     instagram: "https://www.instagram.com/astola.it/",
+    facebook: "https://www.facebook.com/search/top?q=astola%20igeriketa%20taldea&locale=es_ES",
+    tiktok: "https://www.tiktok.com/@astola.igeriketa.taldea",
   };
 
   const trainingSchedule = [
@@ -424,7 +432,6 @@ const App = () => {
                 <p className="text-sm text-green-600">{clubInfo.slogan}</p>
               </div>
             </div>
-
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-6">
               {[
@@ -432,7 +439,7 @@ const App = () => {
                 "club",
                 "horarios",
                 "tienda",
-                "instagram",
+                "redes",
                 "calendario",
                 "contacto",
               ].map((section) => (
@@ -458,13 +465,12 @@ const App = () => {
                           ? t.tienda
                           : section === "calendario"
                             ? t.calendario
-                            : section === "instagram"
-                              ? t.instagram
+                            : section === "redes"
+                              ? t.redes
                               : t.contacto}
                 </button>
               ))}
             </nav>
-
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -528,7 +534,6 @@ const App = () => {
                   </div>
                 )}
               </div>
-
               <button
                 onClick={() => setIsCartOpen(true)}
                 className="relative p-2 text-gray-700 hover:text-[#00A63E] transition-colors"
@@ -553,7 +558,7 @@ const App = () => {
               "club",
               "horarios",
               "tienda",
-              "instagram",
+              "redes",
               "calendario",
               "contacto",
             ].map((section) => (
@@ -579,15 +584,14 @@ const App = () => {
                         ? t.tienda
                         : section === "calendario"
                           ? t.calendario
-                          : section === "instagram"
-                            ? t.instagram
+                          : section === "redes"
+                            ? t.redes
                             : t.contacto}
               </button>
             ))}
           </div>
         </div>
       )}
-
       {/* Hero Section */}
       {activeSection === "home" && (
         <section
@@ -602,7 +606,6 @@ const App = () => {
             <h2 className="text-3xl md:text-5xl font-bold mb-6">
               {t.welcome} <span className="text-[#00A63E]">Astola I.K.T.</span>
             </h2>
-
             <div className="text-lg md:text-xl font-medium mb-8 space-y-4">
               {Array.isArray(t.clubDescription) ? (
                 t.clubDescription.map((paragraph, index) => (
@@ -612,7 +615,6 @@ const App = () => {
                 <p>{t.clubDescription}</p>
               )}
             </div>
-
             <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => setActiveSection("club")}
@@ -621,7 +623,10 @@ const App = () => {
                 {t.knowClub}
               </button>
               <button
-                onClick={() => setActiveSection("instagram")}
+                onClick={() => {
+                  setActiveSection("redes");
+                  setSocialMediaTab("instagram");
+                }}
                 className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg font-bold hover:from-purple-700 hover:to-pink-700 transition-colors flex items-center justify-center"
               >
                 <Instagram className="w-5 h-5 mr-2" />
@@ -631,7 +636,6 @@ const App = () => {
           </div>
         </section>
       )}
-
       {/* El Club Section */}
       {activeSection === "club" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -640,7 +644,6 @@ const App = () => {
               <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
                 {t.aboutClub}
               </h2>
-
               <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-900 mb-4">
@@ -677,7 +680,6 @@ const App = () => {
                   </ul>
                 </div>
               </div>
-
               <div className="text-center">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-8">
                   {t.technicalTeam}
@@ -701,7 +703,6 @@ const App = () => {
           </div>
         </section>
       )}
-
       {/* Horarios Section */}
       {activeSection === "horarios" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -710,7 +711,6 @@ const App = () => {
               <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
                 {t.trainingSchedule}
               </h2>
-
               <div className="space-y-4">
                 {trainingSchedule.map((group, index) => (
                   <div
@@ -750,7 +750,6 @@ const App = () => {
           </div>
         </section>
       )}
-
       {/* Tienda Section */}
       {activeSection === "tienda" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -759,7 +758,6 @@ const App = () => {
               <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
                 {t.officialStore}
               </h2>
-
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {products.map((product) => (
                   <div
@@ -778,12 +776,9 @@ const App = () => {
                       <p className="text-gray-600 text-sm mb-4">
                         {product.description}
                       </p>
-                      {/* ✅ Precio visible en la tienda */}
                       <p className="text-xl font-bold text-[#00A63E] mb-3">
                         €{product.price}
                       </p>
-
-                      {/* Selector de tallas (solo si hay más de una) */}
                       {product.sizes && product.sizes.length > 1 && (
                         <div className="mb-3">
                           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -802,8 +797,6 @@ const App = () => {
                           </select>
                         </div>
                       )}
-
-                      {/* Botones */}
                       <div className="flex space-x-2">
                         <button
                           onClick={() => openProductModal(product)}
@@ -826,96 +819,196 @@ const App = () => {
           </div>
         </section>
       )}
-
-      {/* Instagram Section */}
-      {activeSection === "instagram" && (
+      {/* Redes Section */}
+      {activeSection === "redes" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="bg-white bg-opacity-90 rounded-lg p-8">
-              <div className="text-center mb-12">
+              <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  {t.followUsInstagram}
+                  {t.redes}
                 </h2>
                 <p className="text-gray-600 mb-6">{t.stayUpdated}</p>
-                <a
-                  href={clubInfo.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-colors"
-                >
-                  <Instagram className="w-5 h-5 mr-2" />
-                  @astola.it
-                </a>
-              </div>
-
-              <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
-                {t.categories}
-              </h3>
-              <p className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
-                {language === "es"
-                  ? "Explora nuestras categorías en Instagram. Haz clic en cualquier imagen para ir a nuestro perfil y ver los Highlights."
-                  : "Esploratu gure kategoriak Instagramen. Egin klik edozein iruditan gure profilera joateko eta Highlight-ak ikusteko."}
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {instagramCategories.map((category) => (
+                <div className="flex flex-wrap justify-center gap-4">
                   <a
-                    key={category.id}
-                    href={
-                      instagramCategoryUrls[category.id] || clubInfo.instagram
-                    }
+                    href={clubInfo.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block relative group cursor-pointer"
+                    className="inline-flex items-center bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-colors"
                   >
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full aspect-square object-cover rounded-lg"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 rounded-lg flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 p-4">
-                      <div className="text-white text-center">
-                        <Camera className="w-8 h-8 mx-auto mb-2" />
-                        <h4 className="text-lg font-bold mb-1">
-                          {category.name}
-                        </h4>
-                        <p className="text-sm">
-                          {category.posts}{" "}
-                          {language === "es" ? "publicaciones" : "argitalpenak"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <div className="bg-white bg-opacity-90 rounded-lg p-3">
-                        <h4 className="font-semibold text-gray-900">
-                          {category.name}
-                        </h4>
-                        <p className="text-sm text-gray-600">
-                          {category.posts}{" "}
-                          {language === "es" ? "publicaciones" : "argitalpenak"}
-                        </p>
-                      </div>
-                    </div>
+                    <Instagram className="w-5 h-5 mr-2" />
+                    @astola.it
                   </a>
-                ))}
+                  <a
+                    href={clubInfo.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  >
+                    <Facebook className="w-5 h-5 mr-2" />
+                    {language === "es" ? "Facebook" : "Facebook"}
+                  </a>
+                  <a
+                    href={clubInfo.tiktok}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center bg-black text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+                  >
+                    <Music className="w-5 h-5 mr-2" />
+                    TikTok
+                  </a>
+                </div>
               </div>
 
-              <div className="text-center mt-12">
-                <a
-                  href={clubInfo.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center bg-[#00A63E] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#008a34] transition-colors"
-                >
-                  <Instagram className="w-5 h-5 mr-2" />
-                  {t.viewAllPosts}
-                </a>
+              {/* Tabs */}
+              <div className="flex justify-center mb-8">
+                <div className="inline-flex bg-gray-100 rounded-lg p-1">
+                  <button
+                    onClick={() => setSocialMediaTab("instagram")}
+                    className={`px-6 py-2 rounded-md text-sm font-medium ${
+                      socialMediaTab === "instagram"
+                        ? "bg-white text-gray-900 shadow-sm"
+                        : "text-gray-600 hover:text-gray-900"
+                    }`}
+                  >
+                    <Instagram className="w-4 h-4 inline mr-1" />
+                    Instagram
+                  </button>
+                  <button
+                    onClick={() => setSocialMediaTab("facebook")}
+                    className={`px-6 py-2 rounded-md text-sm font-medium ${
+                      socialMediaTab === "facebook"
+                        ? "bg-white text-gray-900 shadow-sm"
+                        : "text-gray-600 hover:text-gray-900"
+                    }`}
+                  >
+                    <Facebook className="w-4 h-4 inline mr-1" />
+                    Facebook
+                  </button>
+                  <button
+                    onClick={() => setSocialMediaTab("tiktok")}
+                    className={`px-6 py-2 rounded-md text-sm font-medium ${
+                      socialMediaTab === "tiktok"
+                        ? "bg-white text-gray-900 shadow-sm"
+                        : "text-gray-600 hover:text-gray-900"
+                    }`}
+                  >
+                    <Music className="w-4 h-4 inline mr-1" />
+                    TikTok
+                  </button>
+                </div>
               </div>
+
+              {/* Instagram Content */}
+              {socialMediaTab === "instagram" && (
+                <>
+                  <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
+                    {t.categories}
+                  </h3>
+                  <p className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
+                    {language === "es"
+                      ? "Explora nuestras categorías en Instagram. Haz clic en cualquier imagen para ir a nuestro perfil y ver los Highlights."
+                      : "Esploratu gure kategoriak Instagramen. Egin klik edozein iruditan gure profilera joateko eta Highlight-ak ikusteko."}
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {instagramCategories.map((category) => (
+                      <a
+                        key={category.id}
+                        href={
+                          instagramCategoryUrls[category.id] || clubInfo.instagram
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block relative group cursor-pointer"
+                      >
+                        <img
+                          src={category.image}
+                          alt={category.name}
+                          className="w-full aspect-square object-cover rounded-lg"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 rounded-lg flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 p-4">
+                          <div className="text-white text-center">
+                            <Camera className="w-8 h-8 mx-auto mb-2" />
+                            <h4 className="text-lg font-bold mb-1">
+                              {category.name}
+                            </h4>
+                          </div>
+                        </div>
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="bg-white bg-opacity-90 rounded-lg p-3">
+                            <h4 className="font-semibold text-gray-900">
+                              {category.name}
+                            </h4>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                  <div className="text-center mt-12">
+                    <a
+                      href={clubInfo.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center bg-[#00A63E] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#008a34] transition-colors"
+                    >
+                      <Instagram className="w-5 h-5 mr-2" />
+                      {t.viewAllPosts}
+                    </a>
+                  </div>
+                </>
+              )}
+
+              {/* Facebook Content */}
+              {socialMediaTab === "facebook" && (
+                <div className="text-center py-12">
+                  <Facebook className="w-16 h-16 text-blue-600 mx-auto mb-6" />
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    {t.followUsFacebook}
+                  </h3>
+                  <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                    {language === "es"
+                      ? "Síguenos en Facebook para estar al tanto de todas nuestras novedades, eventos y actividades del club."
+                      : "Jarraitu gaitzazu Facebooken klubearen berri guztiak, ekitaldiak eta jarduerak ez galdutzeko."}
+                  </p>
+                  <a
+                    href={clubInfo.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  >
+                    <Facebook className="w-5 h-5 mr-2" />
+                    {language === "es" ? "Ir a Facebook" : "Joan Facebookera"}
+                  </a>
+                </div>
+              )}
+
+              {/* TikTok Content */}
+              {socialMediaTab === "tiktok" && (
+                <div className="text-center py-12">
+                  <Music className="w-16 h-16 text-black mx-auto mb-6" />
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    {t.followUsTikTok}
+                  </h3>
+                  <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                    {language === "es"
+                      ? "Síguenos en TikTok para ver nuestros videos más divertidos, entrenamientos y momentos especiales del club."
+                      : "Jarraitu gaitzazu TikTokean klubearen bideo dibertigarrienak, entrenamenduak eta momentu bereziak ikusteko."}
+                  </p>
+                  <a
+                    href={clubInfo.tiktok}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center bg-black text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+                  >
+                    <Music className="w-5 h-5 mr-2" />
+                    {language === "es" ? "Ir a TikTok" : "Joan TikTokera"}
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </section>
       )}
-
       {/* Contacto Section */}
       {activeSection === "contacto" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -924,7 +1017,6 @@ const App = () => {
               <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
                 {t.contact}
               </h2>
-
               <div className="grid md:grid-cols-2 gap-12">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">
@@ -958,9 +1050,30 @@ const App = () => {
                         @astola.it
                       </a>
                     </div>
+                    <div className="flex items-center">
+                      <Facebook className="w-5 h-5 text-blue-600 mr-3" />
+                      <a
+                        href={clubInfo.facebook}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-700 font-medium"
+                      >
+                        {language === "es" ? "Facebook" : "Facebook"}
+                      </a>
+                    </div>
+                    <div className="flex items-center">
+                      <Music className="w-5 h-5 text-black mr-3" />
+                      <a
+                        href={clubInfo.tiktok}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-black hover:text-gray-800 font-medium"
+                      >
+                        TikTok
+                      </a>
+                    </div>
                   </div>
                 </div>
-
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">
                     {t.contactForm}
@@ -1010,9 +1123,6 @@ const App = () => {
           </div>
         </section>
       )}
-
-      {/* Calendario Section */}
-
       {/* Calendario Section */}
       {activeSection === "calendario" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -1058,7 +1168,6 @@ const App = () => {
                   ✕
                 </button>
               </div>
-
               <div className="flex-1 overflow-y-auto p-6">
                 {cart.length === 0 ? (
                   <p className="text-gray-500 text-center">
@@ -1114,7 +1223,6 @@ const App = () => {
                   </div>
                 )}
               </div>
-
               {cart.length > 0 && (
                 <div className="p-6 border-t">
                   <div className="flex justify-between items-center mb-4">
@@ -1137,7 +1245,6 @@ const App = () => {
           </div>
         </div>
       )}
-
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1177,6 +1284,24 @@ const App = () => {
                 <Instagram className="w-5 h-5 mr-1" />
                 @astola.it
               </a>
+              <a
+                href={clubInfo.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                <Facebook className="w-5 h-5 mr-1" />
+                Facebook
+              </a>
+              <a
+                href={clubInfo.tiktok}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center text-black hover:text-gray-800 transition-colors"
+              >
+                <Music className="w-5 h-5 mr-1" />
+                TikTok
+              </a>
             </div>
             <div className="text-gray-500 text-sm">
               © {new Date().getFullYear()} Astola I.K.T. Abadiño.{" "}
@@ -1191,15 +1316,12 @@ const App = () => {
       {selectedProduct && (
         <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-75 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg w-full max-w-4xl max-h-[95vh] h-[90vh] sm:h-auto overflow-y-auto relative">
-            {/* Close button */}
             <button
               onClick={() => setSelectedProduct(null)}
               className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100"
             >
               ✕
             </button>
-
-            {/* Main image */}
             <div className="p-6">
               <img
                 src={selectedProduct.images[currentImageIndex]}
@@ -1207,8 +1329,6 @@ const App = () => {
                 className="w-full max-h-[60vh] object-contain mx-auto"
               />
             </div>
-
-            {/* Thumbnails */}
             <div className="px-6 pb-6 flex justify-center space-x-2 overflow-x-auto">
               {selectedProduct.images.map((img, index) => (
                 <button
@@ -1228,8 +1348,6 @@ const App = () => {
                 </button>
               ))}
             </div>
-
-            {/* Navigation buttons */}
             <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
               <button
                 onClick={() =>
@@ -1254,11 +1372,7 @@ const App = () => {
                 ›
               </button>
             </div>
-
-            {/* ✅ Product info DENTRO del contenedor principal */}
-            {/* Product info - 2 columnas */}
             <div className="px-6 py-4 border-t flex flex-col md:flex-row gap-6">
-              {/* Columna izquierda: Nombre, descripción, talla */}
               <div className="md:w-1/2 min-w-0">
                 <h3 className="text-xl font-bold text-gray-900 truncate">
                   {selectedProduct.name}
@@ -1266,7 +1380,6 @@ const App = () => {
                 <p className="text-gray-600 mt-2">
                   {selectedProduct.description}
                 </p>
-                {/* Selector de tallas */}
                 {selectedProduct.sizes && selectedProduct.sizes.length > 1 && (
                   <div className="mt-3">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -1286,8 +1399,6 @@ const App = () => {
                   </div>
                 )}
               </div>
-
-              {/* Columna derecha: Precio y botón */}
               <div className="md:w-1/2 flex flex-col justify-between min-w-0">
                 <div>
                   <span className="text-2xl font-bold text-[#00A63E]">
