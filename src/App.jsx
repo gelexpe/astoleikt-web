@@ -410,7 +410,7 @@ const App = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white shadow-lg border-t">
           <div className="px-4 pt-2 pb-3 space-y-1">
-            {['home', 'club', 'horarios', 'tienda', 'instagram', 'contacto'].map((section) => (
+            {['home', 'club', 'horarios', 'tienda', 'instagram', 'calendario', 'contacto'].map((section) => (
               <button
                 key={section}
                 onClick={() => {
