@@ -37,6 +37,7 @@ import {
   ChevronDown,
   Facebook,
   Music,
+  FileText,
 } from "lucide-react";
 
 // Funciones auxiliares para localStorage
@@ -50,7 +51,6 @@ const getStoredValue = (key, defaultValue) => {
     return defaultValue;
   }
 };
-
 const setStoredValue = (key, value) => {
   if (typeof window === "undefined") return;
   try {
@@ -64,8 +64,12 @@ const App = () => {
   // Estados con persistencia en localStorage
   const [cart, setCart] = useState(() => getStoredValue("astola_cart", []));
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState(() => getStoredValue("astola_activeSection", "home"));
-  const [language, setLanguage] = useState(() => getStoredValue("astola_language", "eu"));
+  const [activeSection, setActiveSection] = useState(() =>
+    getStoredValue("astola_activeSection", "hasiera"),
+  );
+  const [language, setLanguage] = useState(() =>
+    getStoredValue("astola_language", "eu"),
+  );
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -79,33 +83,34 @@ const App = () => {
   const [orderPhone, setOrderPhone] = useState("");
   const [events, setEvents] = useState([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
-  const [socialMediaTab, setSocialMediaTab] = useState(() => getStoredValue("astola_socialMediaTab", "instagram")); // 'instagram', 'facebook', or 'tiktok'
+  const [socialMediaTab, setSocialMediaTab] = useState(() =>
+    getStoredValue("astola_socialMediaTab", "instagram"),
+  );
 
   // Guardar estados en localStorage cuando cambien
   useEffect(() => {
     setStoredValue("astola_cart", cart);
   }, [cart]);
-
   useEffect(() => {
     setStoredValue("astola_activeSection", activeSection);
   }, [activeSection]);
-
   useEffect(() => {
     setStoredValue("astola_language", language);
   }, [language]);
-
   useEffect(() => {
     setStoredValue("astola_socialMediaTab", socialMediaTab);
   }, [socialMediaTab]);
 
   const translations = {
     es: {
-      home: "Inicio",
-      club: "El Club",
+      hasiera: "Inicio",
+      kluba: "Kluba",
       horarios: "Horarios",
       tienda: "Tienda",
       redes: "Redes",
       contacto: "Contacto",
+      calendario: "Calendario",
+      avisoLegal: "Aviso Legal",
       welcome: "Bienvenidos a",
       clubDescription:
         "¡Bienvenidos al Club de Natación de Abadiño! Nos complace daros la bienvenida a esta nueva etapa del club. Hemos logrado resucitarlo con más fuerza y compromiso. Nuestro objetivo es formar y desarrollar nadadores de todas las edades y niveles, fomentando valores como el esfuerzo, la disciplina y el trabajo en equipo. ¡Gracias por uniros a este nuevo capítulo!",
@@ -160,15 +165,31 @@ const App = () => {
       actions: "Ekintza bereziak",
       ourSwimmers: "Gure Igerilariak",
       categories: "Categorías",
-      calendario: "Calendario",
+      legalNotice: "Aviso legal y descargo de responsabilidad",
+      privacyPolicy: "Política de privacidad",
+      responsible: "Responsable del tratamiento",
+      email: "Correo electrónico",
+      addressFull: "Domicilio",
+      purpose: "Finalidad del tratamiento",
+      legalBasis: "Base jurídica (legitimación)",
+      recipients: "Destinatarios",
+      rights: "Derechos de las personas interesadas",
+      dataRetention: "Conservación de los datos",
+      securityMeasures: "Medidas de seguridad",
+      imageUse: "Uso de imágenes y redes sociales",
+      cookies: "Cookies",
+      contact: "Contacto",
+      lastUpdate: "Última actualización: octubre 2025",
     },
     eu: {
-      home: "Hasiera",
-      club: "Kluba",
+      hasiera: "Hasiera",
+      kluba: "Kluba",
       horarios: "Ordutegiak",
       tienda: "Denda",
       redes: "Sare sozialak",
       contacto: "Kontaktua",
+      calendario: "Egutegia",
+      avisoLegal: "Lege Oharra",
       welcome: "Ongi etorri",
       clubDescription:
         "Ongi etorri Abadiñoko Igeriketa Klubera! Ongi etorri klubaren etapa berri honetara. Indar eta konpromiso handiagoz berpiztea lortu dugu. Gure helburua adin eta maila guztietako igerilariak prestatzea eta garatzea da, esfortzua, diziplina eta talde-lana bezalako balioak sustatuz. Eskerrik asko kapitulu berri honetan sartzeagatik!",
@@ -222,7 +243,21 @@ const App = () => {
       actions: "Acitvidades especiales",
       ourSwimmers: "Gure Igerilariak",
       categories: "Kategoriak",
-      calendario: "Egutegia",
+      legalNotice: "Lege oharra eta erantzukizunaren ukapena",
+      privacyPolicy: "Pribatutasun politika",
+      responsible: "Tratamenduaren arduraduna",
+      email: "Posta elektronikoa",
+      addressFull: "Helbidea",
+      purpose: "Tratamenduaren xedea",
+      legalBasis: "Oinarri juridikoa (legitimazioa)",
+      recipients: "Hartzaileak",
+      rights: "Interesatuen eskubideak",
+      dataRetention: "Datuak gordetzeko iraupena",
+      securityMeasures: "Segurtasun neurriak",
+      imageUse: "Irudi eta sare sozialen erabilera",
+      cookies: "Cookieak",
+      contact: "Kontaktua",
+      lastUpdate: "Azken eguneratzea: Urria 2025",
     },
   };
 
@@ -450,6 +485,17 @@ const App = () => {
     },
   ];
 
+  const mainNavItems = [
+    "hasiera",
+    "kluba",
+    "horarios",
+    "tienda",
+    "redes",
+    "calendario",
+    "contacto",
+    "aviso-legal",
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#00A63E] to-[#008a34]">
       {/* Header */}
@@ -473,15 +519,7 @@ const App = () => {
             </div>
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-6">
-              {[
-                "home",
-                "club",
-                "horarios",
-                "tienda",
-                "redes",
-                "calendario",
-                "contacto",
-              ].map((section) => (
+              {mainNavItems.map((section) => (
                 <button
                   key={section}
                   onClick={() => {
@@ -494,19 +532,21 @@ const App = () => {
                       : "text-gray-700 hover:text-[#00A63E]"
                   }`}
                 >
-                  {section === "home"
-                    ? t.home
-                    : section === "club"
-                      ? t.club
+                  {section === "hasiera"
+                    ? t.hasiera
+                    : section === "kluba"
+                      ? t.kluba
                       : section === "horarios"
                         ? t.horarios
                         : section === "tienda"
                           ? t.tienda
-                          : section === "calendario"
-                            ? t.calendario
-                            : section === "redes"
-                              ? t.redes
-                              : t.contacto}
+                          : section === "redes"
+                            ? t.redes
+                            : section === "calendario"
+                              ? t.calendario
+                              : section === "aviso-legal"
+                                ? t.avisoLegal
+                                : t.contacto}
                 </button>
               ))}
             </nav>
@@ -588,19 +628,12 @@ const App = () => {
           </div>
         </div>
       </header>
+
       {/* Mobile menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white shadow-lg border-t">
           <div className="px-4 pt-2 pb-3 space-y-1">
-            {[
-              "home",
-              "club",
-              "horarios",
-              "tienda",
-              "redes",
-              "calendario",
-              "contacto",
-            ].map((section) => (
+            {mainNavItems.map((section) => (
               <button
                 key={section}
                 onClick={() => {
@@ -613,26 +646,29 @@ const App = () => {
                     : "text-gray-700 hover:text-[#00A63E] hover:bg-gray-50"
                 }`}
               >
-                {section === "home"
-                  ? t.home
-                  : section === "club"
-                    ? t.club
+                {section === "hasiera"
+                  ? t.hasiera
+                  : section === "kluba"
+                    ? t.kluba
                     : section === "horarios"
                       ? t.horarios
                       : section === "tienda"
                         ? t.tienda
-                        : section === "calendario"
-                          ? t.calendario
-                          : section === "redes"
-                            ? t.redes
-                            : t.contacto}
+                        : section === "redes"
+                          ? t.redes
+                          : section === "calendario"
+                            ? t.calendario
+                            : section === "aviso-legal"
+                              ? t.avisoLegal
+                              : t.contacto}
               </button>
             ))}
           </div>
         </div>
       )}
+
       {/* Hero Section */}
-      {activeSection === "home" && (
+      {activeSection === "hasiera" && (
         <section
           className="relative py-20 px-4 sm:px-6 lg:px-8 min-h-[60vh] flex items-center justify-center"
           style={{
@@ -656,7 +692,7 @@ const App = () => {
             </div>
             <div className="flex flex-wrap justify-center gap-4">
               <button
-                onClick={() => setActiveSection("club")}
+                onClick={() => setActiveSection("kluba")}
                 className="bg-[#00A63E] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#008a34] transition-colors"
               >
                 {t.knowClub}
@@ -675,8 +711,9 @@ const App = () => {
           </div>
         </section>
       )}
-      {/* El Club Section */}
-      {activeSection === "club" && (
+
+      {/* Kluba Section */}
+      {activeSection === "kluba" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="bg-white bg-opacity-90 rounded-lg p-8">
@@ -742,6 +779,7 @@ const App = () => {
           </div>
         </section>
       )}
+
       {/* Horarios Section */}
       {activeSection === "horarios" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -789,6 +827,7 @@ const App = () => {
           </div>
         </section>
       )}
+
       {/* Tienda Section */}
       {activeSection === "tienda" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -858,6 +897,7 @@ const App = () => {
           </div>
         </section>
       )}
+
       {/* Redes Section */}
       {activeSection === "redes" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -898,7 +938,6 @@ const App = () => {
                   </a>
                 </div>
               </div>
-
               {/* Tabs */}
               <div className="flex justify-center mb-8">
                 <div className="inline-flex bg-gray-100 rounded-lg p-1">
@@ -937,7 +976,6 @@ const App = () => {
                   </button>
                 </div>
               </div>
-
               {/* Instagram Content */}
               {socialMediaTab === "instagram" && (
                 <>
@@ -996,7 +1034,6 @@ const App = () => {
                   </div>
                 </>
               )}
-
               {/* Facebook Content */}
               {socialMediaTab === "facebook" && (
                 <div className="text-center py-12">
@@ -1020,7 +1057,6 @@ const App = () => {
                   </a>
                 </div>
               )}
-
               {/* TikTok Content */}
               {socialMediaTab === "tiktok" && (
                 <div className="text-center py-12">
@@ -1048,6 +1084,7 @@ const App = () => {
           </div>
         </section>
       )}
+
       {/* Contacto Section */}
       {activeSection === "contacto" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -1162,6 +1199,7 @@ const App = () => {
           </div>
         </section>
       )}
+
       {/* Calendario Section */}
       {activeSection === "calendario" && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -1185,6 +1223,100 @@ const App = () => {
           </div>
         </section>
       )}
+
+      {/* Aviso Legal Section */}
+      {activeSection === "aviso-legal" && (
+        <section className="py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white bg-opacity-90 rounded-lg p-8">
+              <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+                {t.avisoLegal}
+              </h2>
+
+              <div className="mb-8">
+                <h3 className="text-2xl font-semibold mb-4">{t.legalNotice}</h3>
+                <p className="text-gray-700 mb-4">
+                  El sitio web de Astola I.K.T. Abadiño tiene como objetivo ofrecer información sobre las actividades del club y servir de punto de contacto con sus miembros y simpatizantes.
+                </p>
+                <p className="text-gray-700 mb-4">
+                  Aunque el contenido se revisa cuidadosamente, el club no garantiza que la información publicada sea completa, exacta o actualizada, y no asume responsabilidad alguna derivada del uso de dicha información.
+                </p>
+                <p className="text-gray-700 mb-4">
+                  Los textos, imágenes, logotipos y demás contenidos de este sitio web están protegidos por derechos de autor y pertenecen a Astola I.K.T. Abadiño. No está permitida su reproducción total o parcial sin autorización previa y por escrito.
+                </p>
+                <p className="text-gray-700">
+                  El club no se hace responsable del contenido de los enlaces externos que puedan incluirse en este sitio web.
+                </p>
+              </div>
+
+              <div className="mb-8">
+                <h3 className="text-2xl font-semibold mb-4">{t.privacyPolicy}</h3>
+
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">{t.responsible}</h4>
+                  <p>Astola I.K.T. Abadiño</p>
+                  <p><strong>{t.email}:</strong> <a href="mailto:astolait@gamail.com" className="text-blue-600">astolait@gamail.com</a></p>
+                  <p><strong>{t.addressFull}:</strong> Eulena 2, 48220 Abadiño (Bizkaia)</p>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">{t.purpose}</h4>
+                  <p>Los datos personales recabados a través de los formularios de contacto o inscripción se utilizan exclusivamente para gestionar la actividad deportiva del club, responder consultas o mantener la comunicación con socios y participantes.</p>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">{t.legalBasis}</h4>
+                  <p>El tratamiento de los datos se basa en el consentimiento de la persona interesada y/o en la relación asociativa que mantiene con el club.</p>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">{t.recipients}</h4>
+                  <p>Los datos no se cederán a terceros salvo obligación legal o cuando sea necesario para la correcta prestación de servicios relacionados con la actividad del club (por ejemplo, federaciones deportivas o aseguradoras). Cuando sea imprescindible utilizar proveedores que puedan acceder a datos (p. ej., alojamiento web, herramientas ofimáticas), el club firmará con ellos los contratos de encargo de tratamiento exigidos por el RGPD.</p>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">{t.rights}</h4>
+                  <p>Cualquier persona tiene derecho a obtener confirmación sobre si en Astola I.K.T. Abadiño tratamos datos personales que le conciernan. Las personas interesadas tienen derecho a acceder a sus datos personales, así como a solicitar la rectificación de los datos inexactos o, en su caso, solicitar su supresión cuando, entre otros motivos, los datos ya no sean necesarios para los fines que fueron recogidos. También podrán solicitar la limitación del tratamiento, la portabilidad de sus datos y oponerse al tratamiento en determinadas circunstancias.</p>
+                  <p className="mt-2">Para ejercer estos derechos, envía un correo a <a href="mailto:astolait@gamail.com" className="text-blue-600">astolait@gamail.com</a> indicando el derecho que deseas ejercer.</p>
+                  <p>Asimismo, puedes presentar una reclamación ante la Agencia Española de Protección de Datos (<a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer" className="text-blue-600">www.aepd.es</a>) si consideras que tus derechos no han sido atendidos correctamente.</p>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">{t.dataRetention}</h4>
+                  <p>Los datos personales se conservarán mientras dure la relación con el club y durante los plazos necesarios para cumplir las obligaciones legales correspondientes.</p>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">{t.securityMeasures}</h4>
+                  <p>Astola I.K.T. Abadiño aplica las medidas técnicas y organizativas necesarias para garantizar la confidencialidad e integridad de los datos personales conforme al Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD).</p>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">{t.imageUse}</h4>
+                  <p>El club podrá publicar en su web o redes sociales fotografías o vídeos de las actividades deportivas y eventos, siempre con fines informativos y de difusión de la actividad del club.</p>
+                  <p>Si no deseas que tu imagen o la de tus hijos/as aparezca, puedes solicitar su retirada escribiendo a <a href="mailto:astolait@gamail.com" className="text-blue-600">astolait@gamail.com</a>. En caso de menores de edad, el club recabará, cuando corresponda, la autorización de sus progenitores o tutores.</p>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">{t.cookies}</h4>
+                  <p>Este sitio web puede utilizar cookies técnicas necesarias para su correcto funcionamiento. No se emplean cookies con fines publicitarios ni de seguimiento.</p>
+                  <p>Puedes configurar tu navegador para bloquear o eliminar las cookies en cualquier momento. Si en el futuro se incorporaran cookies analíticas o de terceros, se informará debidamente y se solicitará el consentimiento correspondiente.</p>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-medium">{t.contact}</h4>
+                  <p>Para cualquier duda relacionada con este aviso o con la política de privacidad, puedes escribir a <a href="mailto:astolait@gamail.com" className="text-blue-600">astolait@gamail.com</a> o dirigirte por escrito a Astola I.K.T. Abadiño, Eulena 2, 48220 Abadiño (Bizkaia).</p>
+                </div>
+              </div>
+
+              <div className="text-center text-gray-600 mt-8">
+                <p>{t.lastUpdate}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Cart Sidebar */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
@@ -1284,6 +1416,7 @@ const App = () => {
           </div>
         </div>
       )}
+
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1342,6 +1475,18 @@ const App = () => {
                 TikTok
               </a>
             </div>
+            <div className="mb-4">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveSection("aviso-legal");
+                }}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                {t.avisoLegal}
+              </a>
+            </div>
             <div className="text-gray-500 text-sm">
               © {new Date().getFullYear()} Astola I.K.T. Abadiño.{" "}
               {language === "es"
@@ -1351,6 +1496,7 @@ const App = () => {
           </div>
         </div>
       </footer>
+
       {/* Product Gallery Modal */}
       {selectedProduct && (
         <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-75 flex items-center justify-center p-4">
@@ -1462,6 +1608,7 @@ const App = () => {
           </div>
         </div>
       )}
+
       {/* Order Modal */}
       {isOrderModalOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-75 flex items-center justify-center p-4">
