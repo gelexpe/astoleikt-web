@@ -691,46 +691,69 @@ const App = () => {
         </div>
       </header>
 
-      {/* Mobile menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg border-t">
-          <div className="px-4 pt-2 pb-3 space-y-1">
-            {mainNavItems.map((section) => (
-              <button
-                key={section}
-                onClick={() => {
-                  setActiveSection(section);
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-                  activeSection === section
-                    ? "text-[#00A63E] bg-green-50"
-                    : "text-gray-700 hover:text-[#00A63E] hover:bg-gray-50"
-                }`}
-              >
-                {section === "hasiera"
-                  ? t.hasiera
-                  : section === "kluba"
-                    ? t.kluba
-                    : section === "horarios"
-                      ? t.horarios
-                      : section === "enlaces"
-                        ? t.enlaces
-                        : section === "tienda"
-                          ? t.tienda
-                          : section === "redes"
-                            ? t.redes
-                            : section === "calendario"
-                              ? t.calendario
-                              : section === "aviso-legal"
-                                ? t.avisoLegal
-                                : t.contacto}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
+     {/* Mobile menu - Fixed at top */}
+     {isMobileMenuOpen && (
+       <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-lg border-b">
+         {/* Header for the mobile menu */}
+         <div className="flex items-center justify-between p-4 border-b">
+           <div className="flex items-center space-x-3">
+             <div className="w-12 h-12 flex items-center justify-center">
+               <img
+                 src={logoabadino}
+                 alt="Astola I.K.T. Abadiño"
+                 className="w-12 h-12 object-contain"
+               />
+             </div>
+             <div>
+               <h1 className="text-xl font-bold text-gray-900">{clubInfo.name}</h1>
+               <p className="text-sm text-green-600">{clubInfo.slogan}</p>
+             </div>
+           </div>
+           <button
+             onClick={() => setIsMobileMenuOpen(false)}
+             className="text-gray-700 hover:text-[#00A63E]"
+           >
+             ✕
+           </button>
+         </div>
+     
+         {/* Menu Items */}
+         <div className="px-4 pt-2 pb-3 space-y-1">
+           {mainNavItems.map((section) => (
+             <button
+               key={section}
+               onClick={() => {
+                 setActiveSection(section);
+                 setIsMobileMenuOpen(false);
+               }}
+               className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                 activeSection === section
+                   ? "text-[#00A63E] bg-green-50"
+                   : "text-gray-700 hover:text-[#00A63E] hover:bg-gray-50"
+               }`}
+             >
+               {section === "hasiera"
+                 ? t.hasiera
+                 : section === "kluba"
+                   ? t.kluba
+                   : section === "horarios"
+                     ? t.horarios
+                     : section === "enlaces"
+                       ? t.enlaces
+                       : section === "tienda"
+                         ? t.tienda
+                         : section === "redes"
+                           ? t.redes
+                           : section === "calendario"
+                             ? t.calendario
+                             : section === "aviso-legal"
+                               ? t.avisoLegal
+                               : t.contacto}
+             </button>
+           ))}
+         </div>
+       </div>
+     )} 
       {/* Hero Section */}
       {activeSection === "hasiera" && (
         <section
@@ -1529,12 +1552,12 @@ const App = () => {
               <span className="text-xl font-bold">{clubInfo.name}</span>
             </div>
             <p className="text-gray-400 mb-6">{clubInfo.slogan}</p>
-            <div className="flex justify-center space-x-6 text-gray-400 mb-6">
-              <div className="flex items-center">
+            <div className="flex flex-col sm:flex-row justify-center sm:space-x-6 text-gray-400 mb-6">
+              <div className="flex items-center mb-2 sm:mb-0">
                 <MapPin className="w-4 h-4 mr-1" />
                 {t.address}
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center mb-2 sm:mb-0">
                 <Phone className="w-4 h-4 mr-1" />
                 {t.phone}
               </div>
