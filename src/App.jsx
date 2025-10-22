@@ -124,7 +124,7 @@ const App = () => {
       avisoLegal: "Aviso Legal",
       welcome: "Bienvenidos a",
       clubDescription:
-        "¡Bienvenidos al Club de Natación de Abadiño! Nos complace daros la bienvenida a esta nueva etapa del club. Hemos logrado resucitarlo con más fuerza y compromiso. Nuestro objetivo es formar y desarrollar nadadores de todas las edades y niveles, fomentando valores como el esfuerzo, la disciplina y el trabajo en equipo. ¡Gracias por uniros a este nuevo capítulo!",
+        "¡Bienvenidos al Club de Natación de Astola I.K.T. Abadiño! Nos complace daros la bienvenida a esta nueva etapa del club. Hemos logrado resucitarlo con más fuerza y compromiso. Nuestro objetivo es formar y desarrollar nadadores de todas las edades y niveles, fomentando valores como el esfuerzo, la disciplina y el trabajo en equipo. ¡Gracias por uniros a este nuevo capítulo!",
       knowClub: "Conoce nuestro club",
       followInstagram: "Síguenos en Instagram",
       aboutClub: "Sobre Nuestro Club",
@@ -157,7 +157,7 @@ const App = () => {
       viewAllPosts: "Ver todas las publicaciones",
       contact: "Contacto",
       contactInfo: "Información de Contacto",
-      address: "Piscina Municipal de Abadiño, Bizkaia",
+      address: "Calle Eulena2, 48220 Abadiño-Zelaieta, Bizkaia",
       phone: "+34 679 636 518",
       email: "astolait@gmail.com",
       hours: "Lunes a Viernes: 16:00 - 21:00",
@@ -211,7 +211,7 @@ const App = () => {
       avisoLegal: "Lege Oharra",
       welcome: "Ongi etorri",
       clubDescription:
-        "Ongi etorri Abadiñoko Igeriketa Klubera! Ongi etorri klubaren etapa berri honetara. Indar eta konpromiso handiagoz berpiztea lortu dugu. Gure helburua adin eta maila guztietako igerilariak prestatzea eta garatzea da, esfortzua, diziplina eta talde-lana bezalako balioak sustatuz. Eskerrik asko kapitulu berri honetan sartzeagatik!",
+        "Ongi etorri Astola I.K.T Abadiño Klubera! Ongi etorri klubaren etapa berri honetara. Indar eta konpromiso handiagoz berpiztea lortu dugu. Gure helburua adin eta maila guztietako igerilariak prestatzea eta garatzea da, esfortzua, diziplina eta talde-lana bezalako balioak sustatuz. Eskerrik asko kapitulu berri honetan sartzeagatik!",
       knowClub: "Ezagutu gure kluba",
       followInstagram: "Jarraitu gaitzazu Instagramen",
       aboutClub: "Gure Klubari buruz",
@@ -243,7 +243,7 @@ const App = () => {
       viewAllPosts: "Ikusi argitalpen guztiak",
       contact: "Kontaktua",
       contactInfo: "Kontaktu Informazioa",
-      address: "Abadiñoko Piscina Udala, Bizkaia",
+      address: "Eulena Kalea, 2, 48220 Abadiño-Zelaieta, Bizkaia",
       phone: "+34 679 636 518",
       email: "astolait@gmail.com",
       hours: "Astelehenetik ostiralera: 16:00 - 21:00",
@@ -1221,15 +1221,26 @@ const App = () => {
                   <div className="space-y-4">
                     <div className="flex items-center">
                       <MapPin className="w-5 h-5 text-[#00A63E] mr-3" />
-                      <span className="text-gray-700">{t.address}</span>
+                      <a
+                        href="https://www.google.com/maps/place//data=!4m2!3m1!1s0xd4e2d38af442f49:0x6c99d47732957a95?sa=X&ved=1t:8290&ictx=111"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-700 hover:underline"
+                      >
+                        {t.address}
+                      </a>
                     </div>
                     <div className="flex items-center">
                       <Phone className="w-5 h-5 text-[#00A63E] mr-3" />
-                      <span className="text-gray-700">{t.phone}</span>
+                      <a href="tel:+34679636518" className="text-gray-700 hover:underline">
+                        +34 679 636 518
+                      </a>
                     </div>
                     <div className="flex items-center">
                       <Mail className="w-5 h-5 text-[#00A63E] mr-3" />
-                      <span className="text-gray-700">{t.email}</span>
+                      <a href="mailto:astolait@gmail.com" className="text-gray-700 hover:underline">
+                        astolait@gmail.com
+                      </a>
                     </div>
                     <div className="flex items-center">
                       <Calendar className="w-5 h-5 text-[#00A63E] mr-3" />
@@ -1555,15 +1566,26 @@ const App = () => {
             <div className="flex flex-col sm:flex-row justify-center sm:space-x-6 text-gray-400 mb-6">
               <div className="flex items-center mb-2 sm:mb-0">
                 <MapPin className="w-4 h-4 mr-1" />
-                {t.address}
+                  <a
+                    href="https://www.google.com/maps?q=Piscina+Municipal+de+Abadiño,+Bizkaia"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-700 hover:underline"
+                  >
+                    {t.address}
+                  </a>
               </div>
               <div className="flex items-center mb-2 sm:mb-0">
                 <Phone className="w-4 h-4 mr-1" />
-                {t.phone}
+	        <a href="tel:+34679636518" className="text-gray-700 hover:underline">
+                  +34 679 636 518
+                </a>
               </div>
               <div className="flex items-center">
-                <Mail className="w-4 h-4 mr-1" />
-                {t.email}
+	        <Mail className="w-4 h-4 mr-1" />
+                <a href="mailto:astolait@gmail.com" className="text-gray-400 hover:text-white transition-colors">
+                  astolait@gmail.com
+                </a>
               </div>
             </div>
             <div className="flex justify-center space-x-6 mb-6">
