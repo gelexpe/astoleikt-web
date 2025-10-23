@@ -12,9 +12,11 @@
   "dependencies": {
     "@prismicio/client": "^7.20.2",
     "@prismicio/react": "^3.2.2",
+    "axios": "^1.12.2",
     "lucide-react": "^0.545.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-helmet-async": "^2.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
