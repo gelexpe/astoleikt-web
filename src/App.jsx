@@ -196,7 +196,6 @@ const App = () => {
       securityMeasures: "Medidas de seguridad",
       imageUse: "Uso de imágenes y redes sociales",
       cookies: "Cookies",
-      contact: "Contacto",
       lastUpdate: "Última actualización: octubre 2025",
     },
     eu: {
@@ -282,7 +281,6 @@ const App = () => {
       securityMeasures: "Segurtasun neurriak",
       imageUse: "Irudi eta sare sozialen erabilera",
       cookies: "Cookieak",
-      contact: "Kontaktua",
       lastUpdate: "Azken eguneratzea: Urria 2025",
     },
   };
