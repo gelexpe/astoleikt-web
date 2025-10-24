@@ -1,34 +1,34 @@
 // App.jsx
 import React, { useState, useEffect } from "react";
 import SEO from "./components/SEO"; // 👈 Importamos SEO
-import piscina from "./assets/piscina.png";
-import mochila from "./assets/mochila.png";
-import mochila2 from "./assets/mochila2.jpg";
-import mochila3 from "./assets/mochila3.png";
-import udalekuak from "./assets/udalekuak.png";
-import jardunaldiak from "./assets/jardunaldiak.png";
-import eh_txapelketa from "./assets/eh_txapelketa.png";
-import master from "./assets/master.png";
-import bizkaia from "./assets/bizkaia.png";
-import igerilariak from "./assets/igerilariak.png";
-import denborak from "./assets/denborak.png";
-import ekintzak from "./assets/ekintzak.png";
-import camiseta1 from "./assets/camiseta1.png";
-import camiseta2 from "./assets/camiseta2.png";
-import camiseta3 from "./assets/camiseta3.png";
-import sudadera from "./assets/sudadera.jpeg";
-import pantalon1 from "./assets/pantalon1.jpg";
-import pantalon2 from "./assets/pantalon2.png";
-import pantalon3 from "./assets/pantalon3.png";
-import logoabadino from "./assets/logoabadino.png";
-import logoabadino2 from "./assets/logoabadino-blanco.png";
+import piscina from "./assets/astola_igeriketa_talea_piscina.png";
+import mochila from "./assets/astola_igeriketa_talea_mochila.png";
+import mochila2 from "./assets/astola_igeriketa_talea_mochila2.jpg";
+import mochila3 from "./assets/astola_igeriketa_talea_mochila3.png";
+import udalekuak from "./assets/astola_igeriketa_talea_udalekuak.png";
+import jardunaldiak from "./assets/astola_igeriketa_talea_jardunaldiak.png";
+import eh_txapelketa from "./assets/astola_igeriketa_talea_eh_txapelketa.png";
+import master from "./assets/astola_igeriketa_talea_master.png";
+import bizkaia from "./assets/astola_igeriketa_talea_bizkaia.png";
+import igerilariak from "./assets/astola_igeriketa_talea_igerilariak.png";
+import denborak from "./assets/astola_igeriketa_talea_denborak.png";
+import ekintzak from "./assets/astola_igeriketa_talea_ekintzak.png";
+import camiseta1 from "./assets/astola_igeriketa_talea_camiseta1.png";
+import camiseta2 from "./assets/astola_igeriketa_talea_camiseta2.png";
+import camiseta3 from "./assets/astola_igeriketa_talea_camiseta3.png";
+import sudadera from "./assets/astola_igeriketa_talea_sudadera.jpeg";
+import pantalon1 from "./assets/astola_igeriketa_talea_pantalon1.jpg";
+import pantalon2 from "./assets/astola_igeriketa_talea_pantalon2.png";
+import pantalon3 from "./assets/astola_igeriketa_talea_pantalon3.png";
+import logoabadino from "./assets/astola_igeriketa_talea_logoabadino.png";
+import logoabadino2 from "./assets/astola_igeriketa_talea_logoabadino-blanco.png";
 // Logos de federaciones
-import bizkaiaLogo from "./assets/bizkaia_federazioa_logo.png";
-import euskadiLogo from "./assets/euskadi_federazioa_logo.png";
-import arabaLogo from "./assets/araba_federazioa_logo.png";
-import gipuzkoaLogo from "./assets/gipuzkoa_federazioa_logo.png";
-import navarraLogo from "./assets/navarra_federazioa_logo.png";
-import rfenLogo from "./assets/rfen_logo.png";
+import bizkaiaLogo from "./assets/astola_igeriketa_talea_bizkaia_federazioa_logo.png";
+import euskadiLogo from "./assets/astola_igeriketa_talea_euskadi_federazioa_logo.png";
+import arabaLogo from "./assets/astola_igeriketa_talea_araba_federazioa_logo.png";
+import gipuzkoaLogo from "./assets/astola_igeriketa_talea_gipuzkoa_federazioa_logo.png";
+import navarraLogo from "./assets/astola_igeriketa_talea_navarra_federazioa_logo.png";
+import rfenLogo from "./assets/astola_igeriketa_talea_rfen_logo.png";
 import {
   ShoppingCart,
   Phone,
@@ -809,7 +809,7 @@ const App = () => {
             description={
               language === "es"
                 ? "Conoce la historia, valores y equipo técnico del Club de Natación Astola I.K.T. Abadiño."
-                : "Ezagutu Astola I.K.T. Abadiñoko Igeriketa Klubaren historia, balioak eta teknikari taldea."
+                : "Ezagutu Astola IKT Abadiñoko Igeriketa Klubaren historia, balioak eta teknikari taldea."
             }
           />
           <section className="py-16 px-4 sm:px-6 lg:px-8">
